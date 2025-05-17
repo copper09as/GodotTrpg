@@ -6,8 +6,9 @@ using System.Linq;
 public partial class RoomManager : Node
 {
     public static RoomManager Instance { get; private set; }
-    public Dictionary<int, Room> rooms;
-    public List<int> players = new List<int>();
+    public Dictionary<int, Room> rooms;//服务端使用
+    public List<int> players = new List<int>();//本地使用
+
 
     [Export] public Label count;
     public override void _Ready()
@@ -53,29 +54,47 @@ public partial class RoomManager : Node
         };
         return room;
     }
-private void LeaveRoom(int roomId, int peerId)
-{
-    if (rooms.TryGetValue(roomId, out Room room))
+    public int LeaveRoom(int playerId)
     {
-        lock (room.players)
+        int roomId = -1;
+        lock (rooms) // 确保线程安全
         {
-            room.players.Remove(peerId);
-            if (room.players.Count == 0)
+
+            // 1. 遍历所有房间寻找该玩家
+            List<int> roomsToRemove = new List<int>();
+            foreach (var roomEntry in rooms)
             {
-                rooms.Remove(roomId);
+                Room room = roomEntry.Value;
+                if (room.players.Contains(playerId))
+                {
+                    // 2. 从房间中移除玩家
+                    roomId = room.id;
+                    room.players.Remove(playerId);
+                    GD.Print($"玩家 {playerId} 已从房间 {room.id} 退出");
+
+                    // 3. 检查并标记空房间
+                    if (room.players.Count == 0)
+                    {
+                        GD.Print($"房间 {room.id} 已无玩家，标记销毁");
+                        roomsToRemove.Add(room.id);
+                    }
+                    break;
+                }
+            }
+
+            // 4. 销毁所有空房间
+            foreach (int i in roomsToRemove)
+            {
+                rooms.Remove(i);
+                GD.Print($"房间 {i} 已销毁");
             }
         }
+        return roomId;
     }
-    else
+    public class Room()
     {
-        GD.PrintErr($"房间 {roomId} 不存在，无法移除玩家 {peerId}");
+        public int id;
+        public string name;
+        public List<int> players;
     }
-}
-
-}
-public class Room()
-{
-    public int id;
-    public string name;
-    public List<int> players;
 }

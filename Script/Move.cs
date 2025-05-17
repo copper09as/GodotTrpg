@@ -21,7 +21,7 @@ public partial class Move : Sprite2D
         if (Input.IsActionPressed("Right")) inputDirection.X += 1;
 
         // 发送输入到服务器（仅发送方向，非具体坐标）
-        RpcId(1, MethodName.ServerMoveRequest, this.Position+ inputDirection * 10, int.Parse(Name),GameManager.Instance.roomId); // 1 是服务器 Peer ID
+        //RpcId(1, MethodName.ServerMoveRequest, this.Position+ inputDirection * 10, int.Parse(Name),GameManager.Instance.roomId); // 1 是服务器 Peer ID
     }
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     private void ServerMoveRequest(Vector2 position, long senderPeerId, int roomId)

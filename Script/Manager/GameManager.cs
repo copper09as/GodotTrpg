@@ -1,13 +1,13 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public partial class GameManager : Node
 {
     public static GameManager Instance { get; private set; }
-    public long clientId;
     public int roomId;
-    public Room room;
+    public Player player;
     public override void _Ready()
     {
         base._Ready();
@@ -18,46 +18,25 @@ public partial class GameManager : Node
     }
     public override void _Process(double delta)
     {
+        if (player == null)
+            return;
+        if (int.Parse(Name) != Multiplayer.GetUniqueId())
+            return;
         base._Process(delta);
-        
-
-
-
-        if (Input.IsActionPressed("Up"))
+        var pos = player.MoveInput();
+        RpcId(1, MethodName.ServerMoveRequest, pos, Multiplayer.GetUniqueId(), GameManager.Instance.roomId);
+    }
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    private void ServerMoveRequest(Vector2 position, long senderPeerId, int roomId)
+    {
+        foreach (var id in RoomManager.Instance.rooms[roomId].players)
         {
-            //RpcId(1, MethodName.ServerMoveRequest, roomId);
+            RpcId(id, MethodName.ClientUpdatePos, senderPeerId, position);
         }
     }
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]//所有人都可以发送
-    private void ServerMoveRequest(int roomId)
+    [Rpc(MultiplayerApi.RpcMode.Authority)]
+    private void ClientUpdatePos(long playerId, Vector2 position)
     {
-        if (RoomManager.Instance == null)
-        {
-            GD.PrintErr("RoomManager 未初始化");
-            return;
-        }
-
-        if (!RoomManager.Instance.TryGetRoom(roomId, out var room))
-        {
-            GD.PrintErr($"房间 {roomId} 不存在");
-            return;
-        }
-
-        if (room.players == null || room.players.Count == 0)
-        {
-            GD.Print($"房间 {roomId} 无玩家");
-            return;
-        }
-
-        // ==== 安全操作 ====
-        foreach (var playerId in room.players)
-        {
-            RpcId(playerId, MethodName.ClientUpdatePos, roomId);
-        }
-    }
-    [Rpc(MultiplayerApi.RpcMode.Authority)]//服务器可以发送
-    private void ClientUpdatePos(int roomId)
-    {
-        GD.Print("传输成功" + clientId + "房间号" + roomId);
+        player.UpdatePos(position);
     }
 }

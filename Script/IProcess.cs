@@ -1,0 +1,4 @@
+interface IProcess
+{
+    void InProcess();
+}
