@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://pxjmthrwrffc"]
+[gd_scene load_steps=4 format=3 uid="uid://pxjmthrwrffc"]
 
-[ext_resource type="PackedScene" uid="uid://gccn0pfkht0e" path="res://Tscn/NetManager.tscn" id="1_wtcfe"]
-[ext_resource type="PackedScene" uid="uid://cma2xpq438bfx" path="res://player.tscn" id="3_epypp"]
-[ext_resource type="Script" uid="uid://bxwqd8s6nctdn" path="res://ResManager.cs" id="4_0hol4"]
-[ext_resource type="Script" uid="uid://b8lsayhut3flt" path="res://RoomManager.cs" id="4_q6r6c"]
+[ext_resource type="PackedScene" uid="uid://gccn0pfkht0e" path="res://Tscn/NetManager.tscn" id="1_lrjju"]
+[ext_resource type="Script" uid="uid://bxwqd8s6nctdn" path="res://Script/ResManager.cs" id="3_5t114"]
+[ext_resource type="Script" uid="uid://b8lsayhut3flt" path="res://Script/RoomManager.cs" id="4_0clvt"]
 
 [node name="Node2D" type="Node"]
 
@@ -36,18 +35,17 @@ offset_right = 602.0
 offset_bottom = 311.0
 text = "进入房间"
 
-[node name="NetManager" parent="." node_paths=PackedStringArray("serBtn", "cliBtn", "roomId", "enterBtn") instance=ExtResource("1_wtcfe")]
+[node name="NetManager" parent="." node_paths=PackedStringArray("serBtn", "cliBtn", "roomId", "enterBtn") instance=ExtResource("1_lrjju")]
 serBtn = NodePath("../serveBtn")
 cliBtn = NodePath("../clientBtn")
-move = ExtResource("3_epypp")
 roomId = NodePath("../Room/LineEdit")
 enterBtn = NodePath("../Room/Button")
 
 [node name="ResManager" type="Node" parent="."]
-script = ExtResource("4_0hol4")
+script = ExtResource("3_5t114")
 
 [node name="RoomManager" type="Node" parent="ResManager"]
-script = ExtResource("4_q6r6c")
+script = ExtResource("4_0clvt")
 
 [connection signal="pressed" from="clientBtn" to="NetManager" method="_on_client_btn_pressed"]
 [connection signal="pressed" from="serveBtn" to="NetManager" method="_on_serve_btn_pressed"]

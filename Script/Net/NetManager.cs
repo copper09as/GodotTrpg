@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
 public partial class NetManager : Node
@@ -11,7 +12,7 @@ public partial class NetManager : Node
     [Export] public LineEdit roomId;
     [Export] public Button enterBtn;
     public Dictionary<int, GameManager> playerDic = new Dictionary<int, GameManager>();
-    public Dictionary<int, List<int>> roomDic = new Dictionary<int, List<int>>();
+    //public Dictionary<int, List<int>> roomDic = new Dictionary<int, List<int>>();
     private NetManager() { }
     public override void _Ready()
     {
@@ -41,30 +42,16 @@ public partial class NetManager : Node
             RpcId(1, MethodName.EnterRoom, roomid, peerId);
         }
     }
-
-
-
-
     
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     private void EnterRoom(int roomId, int peerId)
     {
         GD.Print(roomId + "房间");
-        if (roomDic.ContainsKey(roomId))
-        {
-            roomDic[roomId].Add(peerId);
-        }
-        else
-        {
-            roomDic[roomId] = new List<int>();
-            roomDic[roomId].Add(peerId);
-        }
-        ResManager.Instance.CreateInstance<Player>(StringResource.PlayerPath, this, "Player" + peerId.ToString());
-
-        RpcId(peerId, MethodName.SyncEnterRoom, peerId, roomId);
+        var room = RoomManager.Instance.EnterRoom(roomId,peerId);
+        RpcId(peerId, MethodName.SyncEnterRoom,peerId,roomId);
         RpcId(peerId, MethodName.SyncLoadPlayer, peerId);
 
-        foreach (var existingId in roomDic[roomId])
+        foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
         {
             if (existingId != (int)peerId)
             {
@@ -80,7 +67,7 @@ public partial class NetManager : Node
     /// <param name="目标玩家"></param>
     /// <param name="目标房间"></param>
     [Rpc(MultiplayerApi.RpcMode.Authority)]
-    private void SyncEnterRoom(int peerId, int roomId)
+    public void SyncEnterRoom(int peerId,int roomId)
     {
         GD.Print(roomId);
         if (peerId == Multiplayer.GetUniqueId())
@@ -96,17 +83,11 @@ public partial class NetManager : Node
         GD.Print("成功连接到服务器。");
         // 连接成功后，可以在这里进行一些初始化操作
     }
-
-
-
-
-
     private void OnConnectionFailed()
     {
         GD.Print("连接到服务器失败。");
         // 可以在这里进行重连或其他错误处理
     }
-
     private void OnServerDisconnected()
     {
         GD.Print("与服务器断开连接。");
