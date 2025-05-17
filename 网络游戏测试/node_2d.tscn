@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://pxjmthrwrffc"]
+
+[ext_resource type="PackedScene" uid="uid://gccn0pfkht0e" path="res://Tscn/NetManager.tscn" id="1_wtcfe"]
+[ext_resource type="PackedScene" uid="uid://cma2xpq438bfx" path="res://player.tscn" id="3_epypp"]
+[ext_resource type="Script" uid="uid://bxwqd8s6nctdn" path="res://ResManager.cs" id="4_0hol4"]
+[ext_resource type="Script" uid="uid://b8lsayhut3flt" path="res://RoomManager.cs" id="4_q6r6c"]
+
+[node name="Node2D" type="Node"]
+
+[node name="clientBtn" type="Button" parent="."]
+offset_top = 92.0
+offset_right = 88.0
+offset_bottom = 123.0
+text = "创建客户端
+"
+
+[node name="serveBtn" type="Button" parent="."]
+offset_top = 143.0
+offset_right = 88.0
+offset_bottom = 174.0
+text = "创建服务端
+"
+
+[node name="Room" type="Node" parent="."]
+
+[node name="LineEdit" type="LineEdit" parent="Room"]
+offset_left = 530.0
+offset_top = 217.0
+offset_right = 598.563
+offset_bottom = 248.0
+
+[node name="Button" type="Button" parent="Room"]
+offset_left = 530.0
+offset_top = 280.0
+offset_right = 602.0
+offset_bottom = 311.0
+text = "进入房间"
+
+[node name="NetManager" parent="." node_paths=PackedStringArray("serBtn", "cliBtn", "roomId", "enterBtn") instance=ExtResource("1_wtcfe")]
+serBtn = NodePath("../serveBtn")
+cliBtn = NodePath("../clientBtn")
+move = ExtResource("3_epypp")
+roomId = NodePath("../Room/LineEdit")
+enterBtn = NodePath("../Room/Button")
+
+[node name="ResManager" type="Node" parent="."]
+script = ExtResource("4_0hol4")
+
+[node name="RoomManager" type="Node" parent="ResManager"]
+script = ExtResource("4_q6r6c")
+
+[connection signal="pressed" from="clientBtn" to="NetManager" method="_on_client_btn_pressed"]
+[connection signal="pressed" from="serveBtn" to="NetManager" method="_on_serve_btn_pressed"]
+[connection signal="pressed" from="Room/Button" to="NetManager" method="_on_button_pressed"]

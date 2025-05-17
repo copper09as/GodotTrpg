@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://gccn0pfkht0e"]
+
+[ext_resource type="Script" uid="uid://eigeoepc7btc" path="res://Script/Net/NetManager.cs" id="1_w1uiy"]
+
+[node name="NetManager" type="Node"]
+script = ExtResource("1_w1uiy")
