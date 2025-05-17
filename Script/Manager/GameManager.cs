@@ -19,9 +19,13 @@ public partial class GameManager : Node
     public override void _Process(double delta)
     {
         base._Process(delta);
+        
+
+
+
         if (Input.IsActionPressed("Up"))
         {
-            RpcId(1, MethodName.ServerMoveRequest, roomId);
+            //RpcId(1, MethodName.ServerMoveRequest, roomId);
         }
     }
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]//所有人都可以发送

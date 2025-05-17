@@ -32,6 +32,7 @@ public partial class NetManager : Node
         Multiplayer.ConnectedToServer += OnConnectedToServer;
         Multiplayer.ConnectionFailed += OnConnectionFailed;
         Multiplayer.ServerDisconnected += OnServerDisconnected;
+        Multiplayer.PeerDisconnected += OnPeerDisconnected;
     }
     private void OnEnterBtnPress()//向服务端发送申请加入房间
     {
@@ -48,18 +49,24 @@ public partial class NetManager : Node
     {
         GD.Print(roomId + "房间");
         var room = RoomManager.Instance.EnterRoom(roomId,peerId);
-        RpcId(peerId, MethodName.SyncEnterRoom,peerId,roomId);
-        RpcId(peerId, MethodName.SyncLoadPlayer, peerId);
-
+        RpcId(peerId, MethodName.SyncEnterRoom,peerId,roomId);//自己加入自己的房间
+        RpcId(peerId, MethodName.SyncLoadPlayer, peerId);//自己加载自己
+        ResManager.Instance.CreateInstance<Player>(StringResource.PlayerPath, this, "Player" + peerId.ToString());
         foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
         {
             if (existingId != (int)peerId)
             {
-                RpcId(existingId, MethodName.SyncEnterRoom, peerId, roomId);
-                RpcId(peerId, MethodName.SyncLoadPlayer, existingId);
-                RpcId(existingId, MethodName.SyncLoadPlayer, peerId);
+                RpcId(existingId, MethodName.SyncEnterRoom, peerId, roomId);//自己进入别人的房间
+                RpcId(peerId, MethodName.SyncEnterRoom, existingId, roomId);//别人进入自己房间
+                RpcId(peerId, MethodName.SyncLoadPlayer, existingId);//自己这里加载别人
+                RpcId(existingId, MethodName.SyncLoadPlayer, peerId);//别人加载自己
             }
         }
+    }
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    private void LeaveRoom(int peerId)
+    {
+        
     }
     /// <summary>
     /// 加入房间
@@ -67,13 +74,14 @@ public partial class NetManager : Node
     /// <param name="目标玩家"></param>
     /// <param name="目标房间"></param>
     [Rpc(MultiplayerApi.RpcMode.Authority)]
-    public void SyncEnterRoom(int peerId,int roomId)
+    public void SyncEnterRoom(int peerId, int roomId)
     {
         GD.Print(roomId);
         if (peerId == Multiplayer.GetUniqueId())
         {
             GameManager.Instance.roomId = roomId;
         }
+        RoomManager.Instance.players.Add(peerId);
     }
     [Rpc(MultiplayerApi.RpcMode.Authority)]
     private void SyncLoadPlayer(int peerId) =>
@@ -91,6 +99,10 @@ public partial class NetManager : Node
     private void OnServerDisconnected()
     {
         GD.Print("与服务器断开连接。");
+    }
+    private void OnPeerDisconnected(long id)
+    {
+
     }
     private void OnPlayerConnected(long id)
     {
