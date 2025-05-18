@@ -7,22 +7,50 @@ public partial class RoomManager : Node
 {
     public static RoomManager Instance { get; private set; }
     public Dictionary<int, Room> rooms;//服务端使用
+    public List<int> servePlayers = new List<int>();//服务端使用
     public List<int> players = new List<int>();//本地使用
-
-
-    [Export] public Label count;
+    [Export] public ItemList playerList;
+    [Export] public LineEdit roomId;
+    [Export] public Button EnterRoomBtn;
     public override void _Ready()
     {
         base._Ready();
         Instance = this;
         rooms = new Dictionary<int, Room>();
+        EnterRoomBtn.Pressed += OnEnterRoom;
+        ServeEventCenter.RegisterEvent(StringResource.UpdateUi, UpdatePlayerList);
     }
     public override void _Process(double delta)
     {
         base._Process(delta);
-        count.Text = players.Count.ToString();
-    }
 
+
+    }
+    private void OnEnterRoom()//向服务端发送申请加入房间
+    {
+        if (!Multiplayer.IsServer())
+        {
+            int roomid = int.Parse(roomId.Text);
+            int peerId = Multiplayer.GetUniqueId();
+            NetManager.Instance.RpcId(1, "EnterRoom", roomid, peerId);
+            EnterRoomBtn.Hide();
+            roomId.Hide();
+        }
+    }
+    private void UpdatePlayerList()
+    {
+        var onlinePlayers = Multiplayer.IsServer() ? servePlayers : players;
+        
+        playerList.Clear();
+        // 更新玩家数量
+        //count.Text = onlinePlayers.Count.ToString();
+
+        // 添加所有在线玩家的 ID
+        foreach (var playerId in onlinePlayers)
+        {
+            playerList.AddItem(playerId.ToString());
+        }
+    }
     /// <summary>
     /// 请求者加入指定房间,仅服务端处理
     /// </summary>
@@ -30,7 +58,7 @@ public partial class RoomManager : Node
     /// <param name="peerId"></param>
     public Room EnterRoom(int roomId, int peerId)
     {
-        GD.Print(roomId + "房间");
+        GD.Print(peerId + "进入" + roomId + "房间");
         Room room;
         rooms.TryGetValue(roomId, out room);
         if (room == null)
@@ -39,7 +67,6 @@ public partial class RoomManager : Node
         }
         rooms[roomId] = room;
         room.players.Add(peerId);
-        //ResManager.Instance.CreateInstance<Player>(StringResource.PlayerPath, this, "Player" + peerId.ToString());
         return room;
     }
     public bool TryGetRoom(int roomId, out Room room)

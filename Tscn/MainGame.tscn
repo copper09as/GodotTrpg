@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://pxjmthrwrffc"]
+
+[ext_resource type="Script" uid="uid://bxwqd8s6nctdn" path="res://Script/Manager/ResManager.cs" id="2_xk2o1"]
+[ext_resource type="Script" uid="uid://b8lsayhut3flt" path="res://Script/Manager/RoomManager.cs" id="3_686h0"]
+[ext_resource type="Script" uid="uid://dwyqj1gdl2jf5" path="res://Script/Manager/ChatManager.cs" id="3_xkx02"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jr3o"]
+
+[node name="MainGame" type="Node"]
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(6.54578e-06, 0.785527, 0.840718, 1)
+z_index = -1
+offset_right = 360.0
+offset_bottom = 800.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2jr3o")
+
+[node name="SengBtn" type="Button" parent="."]
+offset_top = 745.0
+offset_right = 360.0
+offset_bottom = 817.0
+text = "发送信息"
+
+[node name="ChatList" type="ItemList" parent="." node_paths=PackedStringArray("messageTxt", "SendBtn", "nameTxt")]
+offset_top = 414.0
+offset_right = 356.0
+offset_bottom = 608.0
+script = ExtResource("3_xkx02")
+messageTxt = NodePath("../Message")
+SendBtn = NodePath("../SengBtn")
+nameTxt = NodePath("../name")
+
+[node name="name" type="LineEdit" parent="."]
+offset_top = 344.0
+offset_right = 356.0
+offset_bottom = 375.0
+placeholder_text = "名字:"
+
+[node name="Message" type="TextEdit" parent="."]
+offset_top = 656.0
+offset_right = 360.0
+offset_bottom = 736.0
+placeholder_text = "发送消息"
+
+[node name="ItemList" type="ItemList" parent="."]
+offset_top = -1.0
+offset_right = 113.0
+offset_bottom = 39.0
+scale = Vector2(3.14701, 3.14701)
+theme_override_font_sizes/font_size = 8
+
+[node name="Room" type="Node" parent="."]
+
+[node name="LineEdit" type="LineEdit" parent="Room"]
+offset_top = 137.0
+offset_right = 356.0
+offset_bottom = 232.0
+placeholder_text = "房间号:"
+
+[node name="Button" type="Button" parent="Room"]
+offset_top = 232.0
+offset_right = 360.0
+offset_bottom = 304.0
+text = "进入房间"
+
+[node name="ResManager" type="Node" parent="."]
+script = ExtResource("2_xk2o1")
+
+[node name="RoomManager" type="Node" parent="ResManager" node_paths=PackedStringArray("playerList", "roomId", "EnterRoomBtn")]
+script = ExtResource("3_686h0")
+playerList = NodePath("../../ItemList")
+roomId = NodePath("../../Room/LineEdit")
+EnterRoomBtn = NodePath("../../Room/Button")
