@@ -1,24 +1,41 @@
+using System;
 using Godot;
 
 public class ClientNetServe : NetServe
 {
-    public ClientNetServe(MultiplayerApi Multiplayer,string ip,int port) : base(Multiplayer)
+    private string ip;
+    private int port;
+    private static ClientNetServe instance;
+    private ClientNetServe(MultiplayerApi Multiplayer) : base(Multiplayer) { }
+    public static ClientNetServe GetInstance(MultiplayerApi Multiplayer, string ip, int port)
+    {
+        if (ClientNetServe.instance == null)
+        {
+            instance = new ClientNetServe(NetManager.Instance.Multiplayer);
+            Multiplayer.ConnectedToServer += instance.OnConnectedToServer;
+            Multiplayer.ConnectionFailed += instance.OnConnectionFailed;
+            Multiplayer.ServerDisconnected += instance.OnServerDisconnected;
+        }
+        var peer = new ENetMultiplayerPeer();
+        if (peer.CreateClient(ip, port) == Error.Ok)
+        {
+            GD.Print("正在尝试连接到服务器...");
+            Multiplayer.MultiplayerPeer = peer;
+            GD.Print("正在初始化");
+        }
+        return instance;
+
+    }
+    public void CreateClient()
     {
         var peer = new ENetMultiplayerPeer();
         if (peer.CreateClient(ip, port) == Error.Ok)
         {
-            Multiplayer.MultiplayerPeer = peer;
-            Multiplayer.ConnectedToServer += OnConnectedToServer;
-            Multiplayer.ConnectionFailed += OnConnectionFailed;
-            Multiplayer.ServerDisconnected += OnServerDisconnected;
             GD.Print("正在尝试连接到服务器...");
-        }
-        else
-        {
-            GD.Print("客户端创建失败。");
+            Multiplayer.MultiplayerPeer = peer;
+            GD.Print("正在初始化");
         }
     }
-
     public override void EnterRoom()
     {
         throw new System.NotImplementedException();
@@ -26,7 +43,8 @@ public class ClientNetServe : NetServe
     private void OnConnectedToServer()
     {
         GD.Print("成功连接到服务器。");
-        // 连接成功后，可以在这里进行一些初始化操作
+        NetManager.Instance.GetTree().ChangeSceneToFile(StringResource.MainGame);
+        NetManager.Instance.RpcId(1, "LoadGameManager", Multiplayer.GetUniqueId());
     }
     private void OnConnectionFailed()
     {

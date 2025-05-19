@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jr3o"]
 
-[node name="MainGame" type="Node"]
+[node name="MainGame2" type="Node"]
 
 [node name="Panel" type="Panel" parent="."]
 modulate = Color(6.54578e-06, 0.785527, 0.840718, 1)

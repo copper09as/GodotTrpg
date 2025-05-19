@@ -9,6 +9,7 @@ public partial class RoomManager : Node
     public Dictionary<int, Room> rooms;//服务端使用
     public List<int> servePlayers = new List<int>();//服务端使用
     public List<int> players = new List<int>();//本地使用
+    [Export] public ItemList roomList;//服务端使用
     [Export] public ItemList playerList;
     [Export] public LineEdit roomId;
     [Export] public Button EnterRoomBtn;
@@ -17,14 +18,15 @@ public partial class RoomManager : Node
         base._Ready();
         Instance = this;
         rooms = new Dictionary<int, Room>();
-        EnterRoomBtn.Pressed += OnEnterRoom;
+        if (EnterRoomBtn != null)
+        {
+            EnterRoomBtn.Pressed += OnEnterRoom;
+        }
         ServeEventCenter.RegisterEvent(StringResource.UpdateUi, UpdatePlayerList);
     }
     public override void _Process(double delta)
     {
         base._Process(delta);
-
-
     }
     private void OnEnterRoom()//向服务端发送申请加入房间
     {
@@ -42,14 +44,22 @@ public partial class RoomManager : Node
         var onlinePlayers = Multiplayer.IsServer() ? servePlayers : players;
         
         playerList.Clear();
-        // 更新玩家数量
-        //count.Text = onlinePlayers.Count.ToString();
-
-        // 添加所有在线玩家的 ID
-        foreach (var playerId in onlinePlayers)
+        if (roomList != null)
         {
-            playerList.AddItem(playerId.ToString());
+            roomList.Clear();
+            foreach (var room in rooms.Values)
+            {
+                roomList.AddItem("房间号"+room.id.ToString());
+            }
         }
+        // 更新玩家数量
+            //count.Text = onlinePlayers.Count.ToString();
+
+            // 添加所有在线玩家的 ID
+            foreach (var playerId in onlinePlayers)
+            {
+                playerList.AddItem(playerId.ToString());
+            }
     }
     /// <summary>
     /// 请求者加入指定房间,仅服务端处理

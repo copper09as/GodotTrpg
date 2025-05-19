@@ -13,7 +13,7 @@ config_version=5
 config/name="网络游戏测试"
 run/main_scene="uid://cuhy5gn7tptjn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Art/icon.svg"
 
 [autoload]
 

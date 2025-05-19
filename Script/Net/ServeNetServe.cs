@@ -2,23 +2,29 @@ using Godot;
 
 public class ServeNetServe : NetServe
 {
-    public ServeNetServe(MultiplayerApi Multiplayer,int port,int max) : base(Multiplayer)
+    private static ServeNetServe instance;
+    public static ServeNetServe GetInstance(MultiplayerApi Multiplayer, int port, int max)
     {
+        if (instance == null)
+        {
+            instance = new ServeNetServe(NetManager.Instance.Multiplayer, port, max);
+            Multiplayer.PeerConnected += instance.OnPlayerConnected;
+            Multiplayer.PeerDisconnected += instance.OnPlayerDisconnected;
+        }
         var peer = new ENetMultiplayerPeer();
-        if (peer.CreateServer(12345, max) == Error.Ok)
+        if (peer.CreateServer(port, max) == Error.Ok)
         {
             Multiplayer.MultiplayerPeer = peer;
-            Multiplayer.PeerConnected += OnPlayerConnected;
-            Multiplayer.PeerDisconnected += OnPlayerDisconnected;
-            GD.Print("服务器已成功创建并运行。");
+            if (Multiplayer.IsServer())
+            {
+                NetManager.Instance.GetTree().ChangeSceneToFile(StringResource.ServeMainGame);
+                GD.Print("服务器已成功创建并运行。");
+            }
             ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
         }
-        else
-        {
-            GD.Print("服务器创建失败。");
-        }
+        return instance;
     }
-
+    private ServeNetServe(MultiplayerApi Multiplayer, int port, int max) : base(Multiplayer){}
     public override void EnterRoom()
     {
         throw new System.NotImplementedException();
@@ -27,11 +33,7 @@ public class ServeNetServe : NetServe
     {
         if (Multiplayer.IsServer())
         {
-            var playerGameManager = ResManager.Instance.CreateInstance<GameManager>(StringResource.GameManagerPath, NetManager.Instance, id.ToString());
-            NetManager.Instance.RpcId(id, "SyncGameManager", (int)id);
-            RoomManager.Instance.servePlayers.Add((int)id);
             GD.Print(id);
-            ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
         }
     }
     private void OnPlayerDisconnected(long id)

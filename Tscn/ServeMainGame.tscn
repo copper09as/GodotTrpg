@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://mvrvw0c6g6v3"]
+
+[ext_resource type="Script" uid="uid://bxwqd8s6nctdn" path="res://Script/Manager/ResManager.cs" id="1_2gojr"]
+[ext_resource type="Script" uid="uid://b8lsayhut3flt" path="res://Script/Manager/RoomManager.cs" id="2_dwwun"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jr3o"]
+
+[node name="MainGame" type="Node"]
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(6.54578e-06, 0.785527, 0.840718, 1)
+z_index = -1
+offset_right = 360.0
+offset_bottom = 800.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_2jr3o")
+
+[node name="ItemList" type="ItemList" parent="."]
+offset_top = -1.0
+offset_right = 113.0
+offset_bottom = 39.0
+scale = Vector2(3.14701, 3.14701)
+theme_override_font_sizes/font_size = 8
+
+[node name="roomList" type="ItemList" parent="."]
+offset_top = 264.0
+offset_right = 113.0
+offset_bottom = 304.0
+scale = Vector2(3.14701, 3.14701)
+theme_override_font_sizes/font_size = 8
+
+[node name="ResManager" type="Node" parent="."]
+script = ExtResource("1_2gojr")
+
+[node name="RoomManager" type="Node" parent="ResManager" node_paths=PackedStringArray("roomList", "playerList")]
+script = ExtResource("2_dwwun")
+roomList = NodePath("../../roomList")
+playerList = NodePath("../../ItemList")

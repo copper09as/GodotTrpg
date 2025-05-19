@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfhv2lil2n648"]
+[gd_scene load_steps=3 format=3 uid="uid://cuhy5gn7tptjn"]
 
-[ext_resource type="Script" uid="uid://blou1h6eb3xey" path="res://Script/SceneNode/StartUi.cs" id="1_ji8al"]
+[ext_resource type="Script" uid="uid://blou1h6eb3xey" path="res://Script/SceneNode/StartUi.cs" id="1_cxl7g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ji8al"]
 
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_ji8al")
+script = ExtResource("1_cxl7g")
 ServeBtn = NodePath("ServeButton")
 ClientBtn = NodePath("ClientButton")
 Iptxt = NodePath("Ip")
