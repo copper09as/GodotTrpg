@@ -35,7 +35,14 @@ public partial class NetManager : Node
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     private void EnterRoom(int roomId, int peerId)
     {
-
+        if (RoomManager.Instance.rooms.ContainsKey(roomId))
+        {
+            if (RoomManager.Instance.rooms[roomId].players.Count >= 4)
+            {
+                GD.Print(roomId.ToString() + "房间已满");
+                return;
+            }
+        }
         var room = RoomManager.Instance.EnterRoom(roomId, peerId);
         RpcId(peerId, MethodName.SyncEnterRoom, peerId, roomId);//自己加入自己的房间
         RpcId(peerId, MethodName.SyncLoadPlayer, peerId);//自己加载自己

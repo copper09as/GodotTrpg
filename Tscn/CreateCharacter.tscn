@@ -1,0 +1,122 @@
+[gd_scene load_steps=3 format=3 uid="uid://j5iyck3tm8vy"]
+
+[ext_resource type="Script" uid="uid://bugn6v0s87etm" path="res://Script/Character/CharacterCardCreater.cs" id="1_iu4w6"]
+[ext_resource type="Script" uid="uid://ctokniwmad5bp" path="res://Script/Character/CharacterCardEdit.cs" id="2_preye"]
+
+[node name="CreateCharacter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterCardCreater" type="Node" parent="."]
+script = ExtResource("1_iu4w6")
+
+[node name="CharacterCardEdit" type="Node" parent="." node_paths=PackedStringArray("strTxt", "conTxt", "sizTxt", "dexTxt", "appTxt", "wisdomTxt", "powTxt", "eduTxt", "luckyTxt", "ageTxt", "createDataBtn")]
+script = ExtResource("2_preye")
+strTxt = NodePath("LineText/HBoxContainer/VBoxContainer/StrEdit")
+conTxt = NodePath("LineText/HBoxContainer/VBoxContainer/ConEdit")
+sizTxt = NodePath("LineText/HBoxContainer/VBoxContainer/SizEdit")
+dexTxt = NodePath("LineText/HBoxContainer/VBoxContainer/DexEdit")
+appTxt = NodePath("LineText/HBoxContainer/VBoxContainer/AppEdit")
+wisdomTxt = NodePath("LineText/HBoxContainer/VBoxContainer2/WinformEdit")
+powTxt = NodePath("LineText/HBoxContainer/VBoxContainer2/PowEdit")
+eduTxt = NodePath("LineText/HBoxContainer/VBoxContainer2/EduEdit")
+luckyTxt = NodePath("LineText/HBoxContainer/VBoxContainer2/LuckyEdit")
+ageTxt = NodePath("LineText/HBoxContainer/VBoxContainer2/AgeEdit")
+createDataBtn = NodePath("SaveBtn")
+
+[node name="LineText" type="Node" parent="CharacterCardEdit"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CharacterCardEdit/LineText"]
+offset_top = 244.0
+offset_right = 236.0
+offset_bottom = 550.0
+scale = Vector2(1.525, 1.525)
+theme_override_constants/separation = 92
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterCardEdit/LineText/HBoxContainer"]
+layout_mode = 2
+
+[node name="StrLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "力量STR"
+
+[node name="StrEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ConLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "体质CON"
+
+[node name="ConEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SizLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "体型SIZ"
+
+[node name="SizEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="DexLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "敏捷DEX"
+
+[node name="DexEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AppLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "外貌APP"
+
+[node name="AppEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CharacterCardEdit/LineText/HBoxContainer"]
+layout_mode = 2
+
+[node name="WinformLabe" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "智力INT"
+
+[node name="WinformEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="PowLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "意志POW"
+
+[node name="PowEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="EduLabe" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "教育EDU"
+
+[node name="EduEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="LuckyLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "辛运LUCK"
+
+[node name="LuckyEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="AgeLabel" type="Label" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "年龄AGE"
+
+[node name="AgeEdit" type="LineEdit" parent="CharacterCardEdit/LineText/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="SaveBtn" type="Button" parent="CharacterCardEdit"]
+offset_top = 748.0
+offset_right = 360.0
+offset_bottom = 799.0
+text = "保存"
+
+[node name="Attribute" type="Node" parent="."]

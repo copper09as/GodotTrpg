@@ -28,8 +28,6 @@ public partial class GameManager : Node
         var pos = player.MoveInput();
         RpcId(1, MethodName.ServerMoveRequest, pos, Multiplayer.GetUniqueId(), GameManager.Instance.roomId);
     }
-
-
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
     private void ServeSendMsg(long senderPeerId, int roomId, string message)
     {

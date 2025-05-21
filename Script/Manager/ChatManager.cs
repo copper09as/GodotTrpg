@@ -11,11 +11,18 @@ public partial class ChatManager : ItemList
     {
         base._Ready();
         SendBtn.Pressed += OnSendBtn;
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            this.QueueFree();
+        }
+
     }
     public void OnSendBtn()
     {
-
         string name = "";
         if (nameTxt.Text.Equals(string.Empty))
         {
@@ -25,8 +32,8 @@ public partial class ChatManager : ItemList
         {
             name = nameTxt.Text;
         }
-        var message = name+":"+messageTxt.Text;
-        GameManager.Instance.RpcId(1, "ServeSendMsg", Multiplayer.GetUniqueId(), GameManager.Instance.roomId,message);
+        var message = name + ":" + messageTxt.Text;
+        GameManager.Instance.RpcId(1, "ServeSendMsg", Multiplayer.GetUniqueId(), GameManager.Instance.roomId, message);
     }
     public void UpdateMessage(string message)
     {
