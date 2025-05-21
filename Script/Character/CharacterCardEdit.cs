@@ -1,6 +1,7 @@
 
 using Godot;
 using System;
+using System.Linq;
 
 public partial class CharacterCardEdit : Node
 {
@@ -14,6 +15,8 @@ public partial class CharacterCardEdit : Node
     [Export] private LineEdit eduTxt;
     [Export] private LineEdit luckyTxt;
     [Export] private LineEdit ageTxt;
+    [Export] private Label exDmTxt;
+    [Export] private Label speedTxt;
     [Export] private Button createDataBtn;
     public override void _Ready()
     {
@@ -57,6 +60,29 @@ public partial class CharacterCardEdit : Node
         .CreateAge(age)
         .GetPlayerData();
         GameDataHandler.Save<CharacterData>(player, StringResource.PlayerDataFilePath);
+        UpdateTxt(player);
+    }
+    private void UpdateTxt(CharacterData player)
+    {
+        if (player == null)
+        {
+            GD.PrintErr("注入Player为空");
+            return;
+        }
+        strTxt.Text = player.Str.ToString();
+        conTxt.Text = player.Con.ToString();
+        sizTxt.Text = player.Siz.ToString();
+        dexTxt.Text = player.Dex.ToString();
+        appTxt.Text = player.App.ToString();
+        wisdomTxt.Text = player.Wisdom.ToString();
+        powTxt.Text = player.Pow.ToString();
+        eduTxt.Text = player.Edu.ToString();
+        luckyTxt.Text = player.Lucky.ToString();
+        ageTxt.Text = player.Age.ToString();
+        exDmTxt.Text =
+        CaculateTool.ExDamageCaculate(player.ExDamage).Min().ToString() +
+        "——" + CaculateTool.ExDamageCaculate(player.ExDamage).Max();
+        speedTxt.Text = player.Speed.ToString();
     }
     private bool TryParse(LineEdit lineEdit) => !string.IsNullOrWhiteSpace(lineEdit.Text);
 

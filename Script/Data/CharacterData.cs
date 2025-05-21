@@ -216,7 +216,7 @@ public class CharacterData
             {
                 return 9;
             }
-            return 7;
+            return 8;
         }
     }
     public int San//理智
