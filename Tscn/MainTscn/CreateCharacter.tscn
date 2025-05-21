@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://j5iyck3tm8vy"]
 
-[ext_resource type="Script" uid="uid://bugn6v0s87etm" path="res://Script/Character/CharacterCardCreater.cs" id="1_iu4w6"]
-[ext_resource type="Script" uid="uid://ctokniwmad5bp" path="res://Script/Character/CharacterCardEdit.cs" id="2_preye"]
-[ext_resource type="Script" uid="uid://ddjci6pewu8ii" path="res://Script/Manager/SwipePanel.cs" id="3_ymk6a"]
+[ext_resource type="Script" uid="uid://bugn6v0s87etm" path="res://Script/Character/CharacterCardCreater.cs" id="1_gtxmc"]
+[ext_resource type="Script" uid="uid://ctokniwmad5bp" path="res://Script/Character/CharacterCardEdit.cs" id="2_rd0fl"]
+[ext_resource type="Script" uid="uid://ddjci6pewu8ii" path="res://Script/Manager/SwipePanel.cs" id="3_3iquq"]
 
 [node name="CreateCharacter" type="Control"]
 layout_mode = 3
@@ -13,10 +13,10 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="CharacterCardCreater" type="Node" parent="."]
-script = ExtResource("1_iu4w6")
+script = ExtResource("1_gtxmc")
 
 [node name="CharacterCardEdit" type="Node" parent="." node_paths=PackedStringArray("strTxt", "conTxt", "sizTxt", "dexTxt", "appTxt", "wisdomTxt", "powTxt", "eduTxt", "luckyTxt", "ageTxt", "exDmTxt", "speedTxt", "createDataBtn")]
-script = ExtResource("2_preye")
+script = ExtResource("2_rd0fl")
 strTxt = NodePath("../SwipePanel/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/StrEdit")
 conTxt = NodePath("../SwipePanel/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/ConEdit")
 sizTxt = NodePath("../SwipePanel/HBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/SizEdit")
@@ -39,7 +39,7 @@ createDataBtn = NodePath("../SwipePanel/HBoxContainer/VBoxContainer/SaveBtn")
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("3_ymk6a")
+script = ExtResource("3_3iquq")
 _pagesContainer = NodePath("HBoxContainer")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SwipePanel"]

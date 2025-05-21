@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="网络游戏测试"
-run/main_scene="uid://j5iyck3tm8vy"
+run/main_scene="uid://cfhv2lil2n648"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://Art/icon.svg"
 
 [autoload]
 
 NetManager="*res://Tscn/NetManager.tscn"
+SceneManager="*res://Tscn/Instance/SceneManager.tscn"
 
 [display]
 
