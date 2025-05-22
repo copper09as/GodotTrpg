@@ -6,7 +6,7 @@ public partial class SwipePanel : Control
     [Export] private HBoxContainer _pagesContainer;
     [Export] private float _swipeThreshold = 100.0f; // 滑动判定阈值
     [Export] private float _swipeSpeed = 0.3f;       // 滑动动画速度
-
+    [Export] private Label OsTxt;
     private Vector2 _dragStartPosition;
     private float _pageWidth;
     [Export]private int _currentPageIndex = 0;
@@ -15,11 +15,13 @@ public partial class SwipePanel : Control
     public override void _Ready()
     {
         _pageWidth = GetViewportRect().Size.X;
+        OsTxt.Text = OS.GetName();
         if (OS.GetName() == "Android")
         {
-            _swipeThreshold /= 2;
+            _swipeThreshold = 200;
         }
     }
+
 
     public override void _Input(InputEvent @event)
     {

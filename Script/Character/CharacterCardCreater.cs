@@ -8,11 +8,15 @@ public partial class CharacterCardCreater : Node
     public override void _Ready()
     {
         base._Ready();
-        player = new CharacterData();
         if (Instance == null)
             Instance = this;
         else
             this.QueueFree();
+    }
+    public CharacterCardCreater Resert()
+    {
+        player = new CharacterData();
+        return this;
     }
     public CharacterCardCreater CreateStr(int str)
     {
@@ -73,7 +77,43 @@ public partial class CharacterCardCreater : Node
         player.Age = age;
         return this;
     }
-    public CharacterData GetPlayerData() => this.player;
-    
+    public CharacterCardCreater CreateName(string name)
+    {
+        player.Name = name;
+        return this;
+    }
+    public CharacterCardCreater CreateSex(int sex)
+    {
+        player.Sex = sex;
+        return this;
+    }
+
+    public CharacterCardCreater CreateEra(int era)
+    {
+        player.Era = era;
+        return this;
+    }
+
+    public CharacterCardCreater CreateHome(string home)
+    {
+        player.Home = home;
+        return this;
+    }
+
+    public CharacterCardCreater CreateHomeTown(string homeTown)
+    {
+        player.HomeTown = homeTown;
+        return this;
+    }
+    public CharacterCardCreater CreateOrigin()
+    {
+        player.SetOrigin();
+        return this;
+    }
+    public CharacterData GetPlayerData()
+    {
+        return player;
+    }
+
 
 }
