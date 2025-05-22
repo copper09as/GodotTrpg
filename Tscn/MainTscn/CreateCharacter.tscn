@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bugn6v0s87etm" path="res://Script/Character/CharacterCardCreater.cs" id="1_gtxmc"]
 [ext_resource type="Script" uid="uid://ctokniwmad5bp" path="res://Script/Character/CharacterCardEdit.cs" id="2_rd0fl"]
 [ext_resource type="Script" uid="uid://ddjci6pewu8ii" path="res://Script/Manager/SwipePanel.cs" id="3_3iquq"]
-[ext_resource type="Texture2D" uid="uid://b0odjyi32f6ew" path="res://Art/037158c986924f08ab63aada1385182.jpg" id="4_rd0fl"]
+[ext_resource type="Texture2D" uid="uid://drf2bkiwma7fy" path="res://Art/1cb6b2febd4673005a6ac35de50af98.jpg" id="4_rd0fl"]
 
 [node name="CreateCharacter" type="Control"]
 layout_mode = 3
@@ -16,7 +16,7 @@ grow_vertical = 2
 [node name="CharacterCardCreater" type="Node" parent="."]
 script = ExtResource("1_gtxmc")
 
-[node name="CharacterCardEdit" type="Node" parent="." node_paths=PackedStringArray("strTxt", "conTxt", "sizTxt", "dexTxt", "appTxt", "wisdomTxt", "powTxt", "eduTxt", "luckyTxt", "ageTxt", "sanTxt", "mpTxt", "exDmTxt", "speedTxt", "PhysiqueTxt", "nameTxt", "homeTxt", "homeTownTxt", "eraTxt", "sexTxt", "createDataBtn", "loadDataBtn", "rollBtn")]
+[node name="CharacterCardEdit" type="Node" parent="." node_paths=PackedStringArray("strTxt", "conTxt", "sizTxt", "dexTxt", "appTxt", "wisdomTxt", "powTxt", "eduTxt", "luckyTxt", "ageTxt", "sanTxt", "mpTxt", "exDmTxt", "speedTxt", "PhysiqueTxt", "nameTxt", "homeTxt", "homeTownTxt", "eraTxt", "sexTxt", "saveBtn", "loadDataBtn", "rollBtn")]
 script = ExtResource("2_rd0fl")
 strTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer/StrEdit")
 conTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer/ConEdit")
@@ -38,7 +38,7 @@ homeTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/HomeEdit
 homeTownTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/HomeTownEdit")
 eraTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/EraEdit")
 sexTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/SexEdit")
-createDataBtn = NodePath("../SwipePanel/HBoxContainer/Data/SaveBtn")
+saveBtn = NodePath("../SwipePanel/HBoxContainer/Data/SaveBtn")
 loadDataBtn = NodePath("../SwipePanel/HBoxContainer/Data/LoadBtn")
 rollBtn = NodePath("../SwipePanel/HBoxContainer/Data/RollBtn")
 

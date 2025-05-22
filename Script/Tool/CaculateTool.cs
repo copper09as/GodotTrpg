@@ -20,7 +20,7 @@ public static class CaculateTool
         Array<int> ans = new Array<int>();
         for (int i = 0; i < cap; i++)
         {
-            ans.Add(i + times);
+            ans.Add(i + times+ex);
         }
         return ans;
     }
@@ -67,7 +67,7 @@ public static class CaculateTool
         {
             // 减少力量和体质合计5点
             ReduceAttributes(character, 5, "Strength", "Constitution");
-            character.Edu = character.initialEdu-5;
+            character.Edu -=5;
         }
         else if (value >= 20 && value <= 39)
         {
@@ -77,7 +77,7 @@ public static class CaculateTool
         {
             // 减少力量、体质、敏捷合计5点
             ReduceAttributes(character, 5, "Strength", "Constitution", "Dexterity");
-            character.App = character.initialApp-5;
+            character.App -=5;
             // 对教育进行2次增强检定
             EnhanceEducation(character, 2);
         }
@@ -85,7 +85,7 @@ public static class CaculateTool
         {
             // 减少力量、体质、敏捷合计10点
             ReduceAttributes(character, 10, "Strength", "Constitution", "Dexterity");
-            character.App = character.initialApp-10;
+            character.App -=10;
             // 对教育进行3次增强检定
             EnhanceEducation(character, 3);
         }
@@ -93,7 +93,7 @@ public static class CaculateTool
         {
             // 减少力量、体质、敏捷合计15点
             ReduceAttributes(character, 15, "Strength", "Constitution", "Dexterity");
-            character.App = character.initialApp-15;
+            character.App -=15;
             // 对教育进行4次增强检定
             EnhanceEducation(character, 4);
         }
@@ -101,7 +101,7 @@ public static class CaculateTool
         {
             // 减少力量、体质、敏捷合计20点
             ReduceAttributes(character, 20, "Strength", "Constitution", "Dexterity");
-            character.App = character.initialApp-20;
+            character.App -=20;
             // 对教育进行4次增强检定
             EnhanceEducation(character, 4);
         }
@@ -109,7 +109,7 @@ public static class CaculateTool
         {
             // 减少力量、体质、敏捷合计25点
             ReduceAttributes(character, 25, "Strength", "Constitution", "Dexterity");
-            character.App = character.initialApp-25;
+            character.App -=25;
             // 对教育进行4次增强检定
             EnhanceEducation(character, 4);
         }
@@ -132,13 +132,13 @@ public static class CaculateTool
             switch (attributeNames[i])
             {
                 case "Strength":
-                    character.Str = character.initialStr-reductions[i];
+                    character.Str -=reductions[i];
                     break;
                 case "Constitution":
-                    character.Con = character.initialCon-reductions[i];
+                    character.Con -=reductions[i];
                     break;
                 case "Dexterity":
-                    character.Dex = character.initialDex-reductions[i];
+                    character.Dex -=reductions[i];
                     break;
             }
         }
@@ -151,8 +151,7 @@ public static class CaculateTool
         {
             if (diceHunderd.PickRandom() > character.Edu)
             {
-                character.Edu = character.initialEdu + diceTen.PickRandom();
-                GD.Print(character.initialEdu);
+                character.Edu += diceTen.PickRandom();
             }
         }
 

@@ -18,7 +18,7 @@ public class CharacterData
     private int edu;//教育
     private int lucky;//幸运
     private int age;//年龄
-
+/*
     public int initialStr { get; set; }
     public int initialCon { get; set; }
     public int initialSiz { get; set; }
@@ -41,6 +41,7 @@ public class CharacterData
         this.initialEdu = edu;
         this.initialLucky = lucky;
     }
+    */
     public int Str
     {
         get

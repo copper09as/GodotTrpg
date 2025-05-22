@@ -56,7 +56,7 @@ public partial class CharacterCardEdit : Node
         if (!TryParse(eraTxt)) return;
         GameDataHandler.Save<CharacterData>(player, StringResource.PlayerDataFilePath);
     }
-    private CharacterData ReplaceCharacter(CharacterData player)
+    /*private CharacterData ReplaceCharacter(CharacterData player)
     {
         int str = int.Parse(strTxt.Text);
         int con = int.Parse(conTxt.Text);
@@ -89,7 +89,7 @@ public partial class CharacterCardEdit : Node
         player.Sex = sex;
         player.Era = era;
         return player;
-    }
+    }*/
     private CharacterData CreateCharacter()
     {
         int str = int.Parse(strTxt.Text);
@@ -124,7 +124,6 @@ public partial class CharacterCardEdit : Node
         .CreateHomeTown(homeTown)
         .CreateSex(sex)
         .CreateEra(era)
-        .CreateOrigin()
         .GetPlayerData();
         return player;
     }
@@ -172,7 +171,7 @@ public partial class CharacterCardEdit : Node
         if (!TryParse(sexTxt)) return;
         if (!TryParse(eraTxt)) return;
         Godot.Collections.Array<int> T3D6 = CaculateTool.CaculateDice(3, 6);
-        Godot.Collections.Array<int> T2D6E6 = CaculateTool.CaculateDice(2, 6);
+        Godot.Collections.Array<int> T2D6E6 = CaculateTool.CaculateDice(2,6,6);
         int str = CaculateTool.Roll(T3D6) * 5;
         int con = CaculateTool.Roll(T3D6) * 5;
         int siz = CaculateTool.Roll(T2D6E6) * 5;
@@ -191,17 +190,7 @@ public partial class CharacterCardEdit : Node
         powTxt.Text = pow.ToString();
         eduTxt.Text = edu.ToString();
         luckyTxt.Text = lucky.ToString();
-        if (FileAccess.FileExists(StringResource.PlayerDataFilePath))
-        {
-            player = GameDataHandler.Load<CharacterData>(StringResource.PlayerDataFilePath);
-            player = ReplaceCharacter(player);
-            GD.Print("存在文件");
-        }
-        else
-        {
-            player = CreateCharacter();
-            GD.Print("不存在文件");
-        }
+        player = CreateCharacter();
         CaculateTool.AdjustAttributes(player);
         UpdateTxt(player);
 

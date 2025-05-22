@@ -105,11 +105,11 @@ public partial class CharacterCardCreater : Node
         player.HomeTown = homeTown;
         return this;
     }
-    public CharacterCardCreater CreateOrigin()
+    /*public CharacterCardCreater CreateOrigin()
     {
         player.SetOrigin();
         return this;
-    }
+    }*/
     public CharacterData GetPlayerData()
     {
         return player;
