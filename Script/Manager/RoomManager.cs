@@ -42,7 +42,6 @@ public partial class RoomManager : Node
     private void UpdatePlayerList()
     {
         var onlinePlayers = Multiplayer.IsServer() ? servePlayers : players;
-        
         playerList.Clear();
         if (roomList != null)
         {
@@ -74,6 +73,7 @@ public partial class RoomManager : Node
         if (room == null)
         {
             room = CreateRoom(roomId, roomId.ToString());
+            room.hostId = peerId;
         }
         rooms[roomId] = room;
         room.players.Add(peerId);
@@ -131,6 +131,7 @@ public partial class RoomManager : Node
     public class Room()
     {
         public int id;
+        public int hostId;
         public string name;
         public List<int> players;
     }

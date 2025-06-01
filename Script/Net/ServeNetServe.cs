@@ -17,7 +17,7 @@ public class ServeNetServe : NetServe
             Multiplayer.MultiplayerPeer = peer;
             if (Multiplayer.IsServer())
             {
-                NetManager.Instance.GetTree().ChangeSceneToFile(StringResource.ServeMainGame);
+                SceneChangeManager.Instance.ChangeScene(StringResource.ServeMainGame);
                 GD.Print("服务器已成功创建并运行。");
             }
             ServeEventCenter.TriggerEvent(StringResource.UpdateUi);

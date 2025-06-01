@@ -34,7 +34,8 @@ public partial class ResManager : Node
             return null;
         }
         instance.Name = name;
-        parent.AddChild(instance);
+        if(parent != null)
+            parent.AddChild(instance);
         return instance;
     }
 }

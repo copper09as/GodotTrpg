@@ -1,0 +1,146 @@
+[gd_scene load_steps=8 format=3 uid="uid://j5iyck3tm8vy"]
+
+[ext_resource type="Texture2D" uid="uid://dslfmk7mdmjx0" path="res://Art/kenney_ui-pack/Vector/Grey/arrow_basic_s_small.svg" id="2_3iquq"]
+[ext_resource type="Script" uid="uid://dnsa61uebg482" path="res://Script/Character/CharacterCardEdit.cs" id="2_rd0fl"]
+[ext_resource type="Material" uid="uid://dmvyrraidv6kd" path="res://Shader/new_shader_material.tres" id="3_gtxmc"]
+[ext_resource type="Script" uid="uid://j2exkymm3o5e" path="res://Tscn/MainTscn/penmanship_edit.gd" id="4_3iquq"]
+[ext_resource type="Texture2D" uid="uid://drf2bkiwma7fy" path="res://Art/1cb6b2febd4673005a6ac35de50af98.jpg" id="4_rd0fl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_udmib"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r3mar"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="CreateCharacter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterCardEdit" type="Node" parent="." node_paths=PackedStringArray("playerName", "penmanshipEdit", "languageEdit", "heartEdit", "saveBtn")]
+script = ExtResource("2_rd0fl")
+playerName = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/NameEdit")
+penmanshipEdit = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/PenmanshipEdit")
+languageEdit = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/LanguageEdit")
+heartEdit = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/HeartEdit")
+saveBtn = NodePath("../SwipePanel/VBoxContainer2/SaveBtn")
+
+[node name="LineText" type="Node" parent="CharacterCardEdit"]
+
+[node name="Attribute" type="Node" parent="."]
+
+[node name="SwipePanel" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SwipePanel"]
+layout_mode = 0
+offset_left = -1.0
+offset_right = 359.0
+offset_bottom = 800.0
+
+[node name="Personal" type="HBoxContainer" parent="SwipePanel/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 217
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SwipePanel/HBoxContainer/Personal"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+layout_mode = 2
+text = "姓名"
+
+[node name="NameEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+material = ExtResource("3_gtxmc")
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+max_length = 4
+clear_button_enabled = true
+
+[node name="PenmanshipLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+layout_mode = 2
+text = "书法"
+
+[node name="PenmanshipEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+layout_mode = 2
+theme_override_icons/arrow = ExtResource("2_3iquq")
+item_count = 3
+popup/item_0/text = "可怜"
+popup/item_0/id = 0
+popup/item_1/text = "普通"
+popup/item_1/id = 1
+popup/item_2/text = "优秀"
+popup/item_2/id = 2
+script = ExtResource("4_3iquq")
+
+[node name="LanguageLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+layout_mode = 2
+text = "语言"
+
+[node name="LanguageEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_udmib")
+theme_override_icons/arrow = ExtResource("2_3iquq")
+item_count = 3
+popup/item_0/text = "可怜"
+popup/item_0/id = 0
+popup/item_1/text = "普通"
+popup/item_1/id = 1
+popup/item_2/text = "优秀"
+popup/item_2/id = 2
+
+[node name="HeartLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+layout_mode = 2
+text = "心灵"
+
+[node name="HeartEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_r3mar")
+theme_override_icons/arrow = ExtResource("2_3iquq")
+item_count = 3
+popup/item_0/text = "可怜"
+popup/item_0/id = 0
+popup/item_1/text = "普通"
+popup/item_1/id = 1
+popup/item_2/text = "优秀"
+popup/item_2/id = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SwipePanel/HBoxContainer/Personal"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Photo" type="TextureRect" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
+material = ExtResource("3_gtxmc")
+custom_minimum_size = Vector2(-1, -1)
+layout_mode = 2
+texture = ExtResource("4_rd0fl")
+expand_mode = 5
+stretch_mode = 4
+
+[node name="ImageId" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 27
+text = "头像Id"
+horizontal_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SwipePanel"]
+layout_mode = 2
+offset_left = -1.0
+offset_top = 659.0
+offset_right = 358.0
+offset_bottom = 797.0
+
+[node name="SaveBtn" type="Button" parent="SwipePanel/VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "保存"
+
+[node name="OS" type="Label" parent="SwipePanel"]
+layout_mode = 0
+offset_top = 774.0
+offset_right = 40.0
+offset_bottom = 797.0

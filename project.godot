@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="网络游戏测试"
-run/main_scene="uid://cfhv2lil2n648"
+config/name="羽毛笔"
+run/main_scene="uid://j5iyck3tm8vy"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://Art/icon.svg"
 
@@ -19,6 +19,8 @@ config/icon="res://Art/icon.svg"
 
 NetManager="*res://Tscn/NetManager.tscn"
 SceneManager="*res://Tscn/Instance/SceneManager.tscn"
+ResManager="*res://Tscn/Instance/ResManager.tscn"
+GameDataCenter="*res://Tscn/Instance/GameDataCenter.tscn"
 
 [display]
 
@@ -26,6 +28,7 @@ window/size/viewport_width=360
 window/size/viewport_height=800
 window/stretch/mode="canvas_items"
 window/handheld/orientation=1
+window/main_scene="uid://cfhv2lil2n648"
 
 [dotnet]
 

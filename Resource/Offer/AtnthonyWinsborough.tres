@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="GrillOfferData" load_steps=2 format=3 uid="uid://b8j0la17wia45"]
+
+[ext_resource type="Script" uid="uid://b40qgwycaorop" path="res://Script/Data/GrillOfferData.cs" id="1_yoo0w"]
+
+[resource]
+script = ExtResource("1_yoo0w")
+InkPot = Dictionary[String, String]({
+"你的孩子": "您亲爱的孩子",
+"妓院": "酒馆",
+"对不起": "无限的哀悼",
+"尸体": "遗体",
+"平静": "在天堂",
+"粗暴": "残暴",
+"警卫": "治安官",
+"难过": "遗憾",
+"雨水": "倾盆大雨"
+})
+Name = "安东尼·温斯伯勒先生"
+Description = "❖ 你与安东尼·温斯伯勒先生通
+信，他是你的老朋友，他的儿
+子鲁伯特被发现死在你的住所
+附近。
+❖ 你写信是为了通知安东尼他儿
+子的死讯。你必须保持敏感并
+解释发生了什么以及你是如何
+找到鲁伯特的。"
+Rules = "❖ 安东尼更愿意从一个虔诚的
+人那里听到这个消息。修道
+士和修女在进行语言检定时
+会获得1个额外的骰子。"
+ConsequencesL = "安东尼做出了咄咄逼人的
+回应，指责你不在他身边，不关心
+他。你再也没有安东尼的消息了。"
+ConsequencesM = "安东尼显然对你向他传达信
+息的方式感到失望，但他并不责怪
+你。"
+ConsequencesH = "安东尼感谢你告诉他关于儿
+子的事情，并邀请你参加他的葬礼。"
+ConsequencesB = "安东尼感谢你的来信，并
+希望你在他儿子的葬礼上发言。"
+metadata/_custom_type_script = "uid://b40qgwycaorop"

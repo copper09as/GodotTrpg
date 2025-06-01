@@ -10,6 +10,7 @@ public partial class NetManager : Node
     [Export] public LineEdit roomId;
     public NetServe netServe;
     //public Dictionary<int, List<int>> roomDic = new Dictionary<int, List<int>>();
+
     private NetManager() { }
     public override void _Ready()
     {
@@ -37,13 +38,14 @@ public partial class NetManager : Node
     {
         if (RoomManager.Instance.rooms.ContainsKey(roomId))
         {
-            if (RoomManager.Instance.rooms[roomId].players.Count >= 4)
+            if (RoomManager.Instance.rooms[roomId].players.Count >= 2)
             {
                 GD.Print(roomId.ToString() + "房间已满");
                 return;
             }
         }
         var room = RoomManager.Instance.EnterRoom(roomId, peerId);
+        RpcId(room.hostId, MethodName.BecomeHost, 1);
         RpcId(peerId, MethodName.SyncEnterRoom, peerId, roomId);//自己加入自己的房间
         RpcId(peerId, MethodName.SyncLoadPlayer, peerId);//自己加载自己
         foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
@@ -54,6 +56,13 @@ public partial class NetManager : Node
                 RpcId(peerId, MethodName.SyncEnterRoom, existingId, roomId);//别人进入自己房间
                 RpcId(peerId, MethodName.SyncLoadPlayer, existingId);//自己这里加载别人
                 RpcId(existingId, MethodName.SyncLoadPlayer, peerId);//别人加载自己
+            }
+        }
+        if (RoomManager.Instance.rooms[roomId].players.Count >= 2)
+        {
+            foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
+            {
+                RpcId(existingId, MethodName.RoomFill);
             }
         }
         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
@@ -118,7 +127,37 @@ public partial class NetManager : Node
         var playerGameManager = ResManager.Instance.CreateInstance<GameManager>(StringResource.GameManagerPath, this, id.ToString());
         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
     }
-
+    public void SetHost(int id)
+    {
+        RpcId(id, MethodName.BecomeHost, id);
+    }
+    [Rpc(MultiplayerApi.RpcMode.Authority)]
+    public void BecomeHost(int id)
+    {
+        GameManager.Instance.IsHost = true;
+    }
+    [Rpc(MultiplayerApi.RpcMode.Authority)]
+    public void RoomFill()
+    {
+        GameManager.Instance.RoomFill();
+    }
+    public void StartGameLocal(int roomId,int offer)
+    {
+        NetManager.Instance.RpcId(1, MethodName.StartGame, GameManager.Instance.roomId,offer);
+    }
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    public void StartGame(int roomId,int offer)
+    {
+        foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
+        {
+            RpcId(existingId, MethodName.SyncStartGame,offer);
+        }
+    }
+    [Rpc(MultiplayerApi.RpcMode.Authority)]
+    public void SyncStartGame(int offer)
+    {
+        GameManager.Instance.StartGame(offer);
+    }
 
 
 }

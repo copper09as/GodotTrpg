@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://kvryyog5jr7l"]
+
+[ext_resource type="Script" uid="uid://ci0k7l6rcgsg4" path="res://Script/Ui/ChoseCharacter.cs" id="1_bfyvn"]
+[ext_resource type="StyleBox" uid="uid://btnuvjams0n1l" path="res://Shader/style_box_flat.tres" id="2_j65uq"]
+[ext_resource type="Texture2D" uid="uid://dslfmk7mdmjx0" path="res://Art/kenney_ui-pack/Vector/Grey/arrow_basic_s_small.svg" id="3_ljind"]
+
+[node name="ChoseCharacter" type="Control" node_paths=PackedStringArray("characterOption")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_bfyvn")
+characterOption = NodePath("CharacterChose")
+
+[node name="CharacterChose" type="OptionButton" parent="."]
+layout_mode = 0
+offset_top = 344.0
+offset_right = 66.0
+offset_bottom = 376.0
+theme_override_styles/normal = ExtResource("2_j65uq")
+theme_override_icons/arrow = ExtResource("3_ljind")

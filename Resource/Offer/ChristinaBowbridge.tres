@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="GrillOfferData" load_steps=2 format=3 uid="uid://dutaar3h13v0w"]
+
+[ext_resource type="Script" uid="uid://b40qgwycaorop" path="res://Script/Data/GrillOfferData.cs" id="1_qnbx6"]
+
+[resource]
+script = ExtResource("1_qnbx6")
+InkPot = Dictionary[String, String]({
+"伪造": "复制",
+"喷泉": "阿来亚大喷泉",
+"对不起": "我深表歉意",
+"我妈妈": "我亲爱的母亲",
+"技能": "专业技能",
+"查看": "审视",
+"王子": "爱德华王子殿下",
+"签字": "题字",
+"颜色": "光谱"
+})
+Name = "鲍布里奇女士"
+Description = "❖ 你的收信人是著名的艺术品交
+易商克里斯蒂娜·鲍布里奇，她
+以热情的个性和对君主制的崇
+拜而闻名。
+❖ 您写信是想询问购买爱德华
+王子四世肖像的事宜，但您
+听说这幅画可能是假的，但
+您必须在不冒犯克里斯蒂娜
+的情况下从她那里验证这一
+信息。"
+Rules = "❖ 鲍布里奇女士喜欢漂亮的书
+法，所以你必须小心。进行书
+法检定时，重掷结果最高的骰
+子并选用最后的掷骰结果。"
+ConsequencesL = "克里斯蒂娜对你的信非常
+生气，并以一封严厉的信回应你的性
+格。她永远不会把这幅画卖给你。"
+ConsequencesM = "克里斯蒂娜的反应很温
+和，但她显然有些被冒犯。她将以双
+倍的价格出售这幅画。"
+ConsequencesH = "克里斯蒂娜对你的来信感到
+满意，并热情回复。她显然没有生
+气，会把这幅画卖给你。"
+ConsequencesB = "克里斯蒂娜被你的信征服
+了，希望把这幅画作为礼物送给你。"
+metadata/_custom_type_script = "uid://b40qgwycaorop"

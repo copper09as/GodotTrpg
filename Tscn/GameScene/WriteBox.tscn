@@ -1,0 +1,102 @@
+[gd_scene load_steps=12 format=3 uid="uid://dhil8fjw4u5u5"]
+
+[ext_resource type="PackedScene" uid="uid://bpbmbmds5rn10" path="res://Tscn/GameScene/WriteWord.tscn" id="1_kohm4"]
+[ext_resource type="Script" uid="uid://dgxqmt7d7yhj2" path="res://Script/GrillWord/WriteBox.cs" id="1_mvk8x"]
+[ext_resource type="Shader" uid="uid://bougo0k2gag3f" path="res://Shader/CreateCharacter.gdshader" id="3_cusow"]
+[ext_resource type="Texture2D" uid="uid://dfp3es7sspj18" path="res://Art/kenney_ui-pack/PNG/Yellow/Default/button_rectangle_gradient.png" id="3_nh36f"]
+[ext_resource type="Texture2D" uid="uid://d3reiwpvhwqpp" path="res://Art/kenney_ui-pack/PNG/Yellow/Default/button_rectangle_gloss.png" id="4_ad8k5"]
+[ext_resource type="Texture2D" uid="uid://c3ig0lqxes250" path="res://Art/kenney_ui-pack/PNG/Blue/Default/button_rectangle_border.png" id="4_sn2y8"]
+[ext_resource type="Texture2D" uid="uid://bb0r46ufqhguh" path="res://Art/kenney_ui-pack/PNG/Blue/Default/button_rectangle_depth_border.png" id="5_nh36f"]
+[ext_resource type="Texture2D" uid="uid://dgoqedqcuhtd8" path="res://Art/kenney_ui-pack/PNG/Yellow/Default/button_rectangle_border.png" id="6_ad8k5"]
+[ext_resource type="FontFile" uid="uid://dnr1l5ggktoi7" path="res://Art/kenney_ui-pack/Font/Kenney Future.ttf" id="6_ckmyi"]
+[ext_resource type="FontFile" uid="uid://b33056pywdxi6" path="res://Art/kenney_ui-pack/Font/Kenney Future Narrow.ttf" id="10_2b1b0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckmyi"]
+shader = ExtResource("3_cusow")
+shader_parameter/time = 0.0
+shader_parameter/speed = 1.0
+shader_parameter/intensity = 1.0
+
+[node name="WriteWordBox" type="Control" node_paths=PackedStringArray("writeWords", "FinishBtn", "HeartBtn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -772.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mvk8x")
+writeWords = [NodePath("VBoxContainer/WriteWord7/WriteWord"), NodePath("VBoxContainer/WriteWord7/WriteWord3"), NodePath("VBoxContainer/WriteWord8/WriteWord"), NodePath("VBoxContainer/WriteWord8/WriteWord3")]
+FinishBtn = NodePath("SaveBtn")
+HeartBtn = NodePath("HeartBtn")
+
+[node name="HeartBtn" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_ckmyi")
+layout_mode = 0
+offset_top = 28.0
+offset_right = 359.0
+offset_bottom = 92.0
+texture_normal = ExtResource("3_nh36f")
+texture_pressed = ExtResource("4_ad8k5")
+texture_hover = ExtResource("6_ad8k5")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HeartBtn"]
+layout_mode = 0
+offset_right = 359.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ckmyi")
+theme_override_font_sizes/font_size = 47
+text = "华丽辞藻"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 40.0
+offset_bottom = 360.0
+theme_override_constants/separation = 120
+
+[node name="WriteWord7" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="WriteWord" parent="VBoxContainer/WriteWord7" node_paths=PackedStringArray("writeBox") instance=ExtResource("1_kohm4")]
+writeBox = NodePath("../../..")
+
+[node name="WriteWord3" parent="VBoxContainer/WriteWord7" node_paths=PackedStringArray("writeBox") instance=ExtResource("1_kohm4")]
+offset_left = 180.0
+offset_right = 180.0
+writeBox = NodePath("../../..")
+
+[node name="WriteWord8" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="WriteWord" parent="VBoxContainer/WriteWord8" node_paths=PackedStringArray("writeBox") instance=ExtResource("1_kohm4")]
+writeBox = NodePath("../../..")
+
+[node name="WriteWord3" parent="VBoxContainer/WriteWord8" node_paths=PackedStringArray("writeBox") instance=ExtResource("1_kohm4")]
+offset_left = 180.0
+offset_right = 180.0
+writeBox = NodePath("../../..")
+
+[node name="SaveBtn" type="TextureButton" parent="."]
+material = SubResource("ShaderMaterial_ckmyi")
+layout_mode = 2
+offset_top = 346.0
+offset_right = 359.0
+offset_bottom = 410.0
+texture_normal = ExtResource("4_sn2y8")
+texture_pressed = ExtResource("5_nh36f")
+texture_hover = ExtResource("6_ad8k5")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SaveBtn"]
+layout_mode = 0
+offset_right = 359.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("10_2b1b0")
+theme_override_font_sizes/font_size = 47
+text = "书写完毕"
+horizontal_alignment = 1

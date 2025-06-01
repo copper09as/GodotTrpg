@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://bf1euvgl4qo15"]
+
+[ext_resource type="Texture2D" uid="uid://v6aq72cw45yx" path="res://Art/kenney_ui-pack/PNG/Blue/Double/button_square_depth_border.png" id="1_jyh5i"]
+[ext_resource type="Script" uid="uid://biarqq4o8biph" path="res://Script/GrillWord/GrillWord.cs" id="1_x22ot"]
+[ext_resource type="Texture2D" uid="uid://b86evxxlhkc3s" path="res://Art/kenney_ui-pack/PNG/Red/Default/button_square_depth_line.png" id="3_nwkj6"]
+[ext_resource type="Shader" uid="uid://dum1lkyhn52xn" path="res://Shader/WordShader.gdshader" id="4_nwkj6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nwkj6"]
+shader = ExtResource("4_nwkj6")
+shader_parameter/active = false
+shader_parameter/intensity = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/lightning_color = Vector4(1, 0.8, 0.2, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3xinx"]
+shader = ExtResource("4_nwkj6")
+shader_parameter/active = false
+shader_parameter/intensity = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/lightning_color = Vector4(1, 0.8, 0.2, 1)
+
+[node name="GrillWord" type="Control" node_paths=PackedStringArray("wordTxt", "background")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 142.0
+offset_bottom = 26.0
+mouse_default_cursor_shape = 1
+script = ExtResource("1_x22ot")
+wordTxt = NodePath("RichTextLabel")
+background = NodePath("TextureRect")
+defaultBack = ExtResource("1_jyh5i")
+transBack = ExtResource("3_nwkj6")
+lightningMaterial = SubResource("ShaderMaterial_nwkj6")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_3xinx")
+layout_mode = 0
+offset_right = 142.0
+offset_bottom = 26.0
+texture = ExtResource("1_jyh5i")
+expand_mode = 1
+
+[node name="RichTextLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 14.0
+offset_right = 130.0
+offset_bottom = 26.0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "溜腿天使拉丝机"
+horizontal_alignment = 1

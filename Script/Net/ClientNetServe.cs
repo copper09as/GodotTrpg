@@ -43,7 +43,7 @@ public class ClientNetServe : NetServe
     private void OnConnectedToServer()
     {
         GD.Print("成功连接到服务器。");
-        NetManager.Instance.GetTree().ChangeSceneToFile(StringResource.MainGame);
+        SceneChangeManager.Instance.ChangeScene(StringResource.MainGame);
         NetManager.Instance.RpcId(1, "LoadGameManager", Multiplayer.GetUniqueId());
     }
     private void OnConnectionFailed()

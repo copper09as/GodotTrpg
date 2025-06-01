@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://bpbmbmds5rn10"]
+
+[ext_resource type="Script" uid="uid://t7qvtjr7mwsb" path="res://Script/GrillWord/WriteWord.cs" id="1_yeybs"]
+[ext_resource type="Shader" uid="uid://dum1lkyhn52xn" path="res://Shader/WordShader.gdshader" id="2_y8lmm"]
+[ext_resource type="Texture2D" uid="uid://v6aq72cw45yx" path="res://Art/kenney_ui-pack/PNG/Blue/Double/button_square_depth_border.png" id="3_nrqal"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_avh00"]
+shader = ExtResource("2_y8lmm")
+shader_parameter/active = false
+shader_parameter/intensity = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/lightning_color = Vector4(1, 0.8, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yeybs"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wn31d"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="WriteWord" type="Control" node_paths=PackedStringArray("wordEdit")]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(1.91748, 2.68144)
+script = ExtResource("1_yeybs")
+wordEdit = NodePath("LineEdit")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_avh00")
+layout_mode = 0
+offset_right = 94.0
+offset_bottom = 26.0
+texture = ExtResource("3_nrqal")
+expand_mode = 1
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_right = 94.0
+offset_bottom = 25.0
+theme_override_colors/font_uneditable_color = Color(0, 0.648435, 0.706702, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 10
+theme_override_styles/read_only = SubResource("StyleBoxFlat_yeybs")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wn31d")
+alignment = 1
+max_length = 7

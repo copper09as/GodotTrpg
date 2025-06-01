@@ -1,6 +1,5 @@
 using Godot;
 using System;
-
 public partial class StartUi : Control
 {
     [Export] private Button ServeBtn;

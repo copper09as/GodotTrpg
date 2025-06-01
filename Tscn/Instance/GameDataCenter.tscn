@@ -1,0 +1,11 @@
+[gd_scene load_steps=5 format=3 uid="uid://yrwbgci4yf05"]
+
+[ext_resource type="Script" uid="uid://f4rd6o0rr6f8" path="res://Script/Data/GameDataCenter.cs" id="1_28xvv"]
+[ext_resource type="Resource" uid="uid://chhwod7mdlh1w" path="res://Resource/Offer/ArchdukeGodfrey.tres" id="2_flt13"]
+[ext_resource type="Resource" uid="uid://dutaar3h13v0w" path="res://Resource/Offer/ChristinaBowbridge.tres" id="3_77d64"]
+[ext_resource type="Resource" uid="uid://b8j0la17wia45" path="res://Resource/Offer/AtnthonyWinsborough.tres" id="4_sq0dn"]
+
+[node name="GameDataCenter" type="Node"]
+script = ExtResource("1_28xvv")
+currentOfferData = ExtResource("2_flt13")
+gameOfferData = Array[Object]([ExtResource("2_flt13"), ExtResource("3_77d64"), ExtResource("4_sq0dn")])

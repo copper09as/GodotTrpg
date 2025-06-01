@@ -1,9 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://j5iyck3tm8vy"]
+[gd_scene load_steps=11 format=3 uid="uid://j5iyck3tm8vy"]
 
-[ext_resource type="Script" uid="uid://bugn6v0s87etm" path="res://Script/Character/CharacterCardCreater.cs" id="1_gtxmc"]
-[ext_resource type="Script" uid="uid://ctokniwmad5bp" path="res://Script/Character/CharacterCardEdit.cs" id="2_rd0fl"]
-[ext_resource type="Script" uid="uid://ddjci6pewu8ii" path="res://Script/Manager/SwipePanel.cs" id="3_3iquq"]
+[ext_resource type="Texture2D" uid="uid://dslfmk7mdmjx0" path="res://Art/kenney_ui-pack/Vector/Grey/arrow_basic_s_small.svg" id="2_3iquq"]
+[ext_resource type="Script" uid="uid://dnsa61uebg482" path="res://Script/Character/CharacterCardEdit.cs" id="2_rd0fl"]
+[ext_resource type="StyleBox" uid="uid://btnuvjams0n1l" path="res://Shader/style_box_flat.tres" id="2_udmib"]
+[ext_resource type="Material" uid="uid://dmvyrraidv6kd" path="res://Shader/CreateCharacter.tres" id="3_gtxmc"]
 [ext_resource type="Texture2D" uid="uid://drf2bkiwma7fy" path="res://Art/1cb6b2febd4673005a6ac35de50af98.jpg" id="4_rd0fl"]
+[ext_resource type="Shader" uid="uid://bougo0k2gag3f" path="res://Shader/CreateCharacter.gdshader" id="6_r3mar"]
+[ext_resource type="Texture2D" uid="uid://c3ig0lqxes250" path="res://Art/kenney_ui-pack/PNG/Blue/Default/button_rectangle_border.png" id="6_udmib"]
+[ext_resource type="Texture2D" uid="uid://bb0r46ufqhguh" path="res://Art/kenney_ui-pack/PNG/Blue/Default/button_rectangle_depth_border.png" id="8_0k2q4"]
+[ext_resource type="Texture2D" uid="uid://dgoqedqcuhtd8" path="res://Art/kenney_ui-pack/PNG/Yellow/Default/button_rectangle_border.png" id="9_y7xxm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0k2q4"]
+shader = ExtResource("6_r3mar")
+shader_parameter/time = 0.0
+shader_parameter/speed = 1.0
+shader_parameter/intensity = 1.0
 
 [node name="CreateCharacter" type="Control"]
 layout_mode = 3
@@ -13,57 +24,34 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CharacterCardCreater" type="Node" parent="."]
-script = ExtResource("1_gtxmc")
-
-[node name="CharacterCardEdit" type="Node" parent="." node_paths=PackedStringArray("strTxt", "conTxt", "sizTxt", "dexTxt", "appTxt", "wisdomTxt", "powTxt", "eduTxt", "luckyTxt", "ageTxt", "sanTxt", "mpTxt", "exDmTxt", "speedTxt", "PhysiqueTxt", "nameTxt", "homeTxt", "homeTownTxt", "eraTxt", "sexTxt", "saveBtn", "loadDataBtn", "rollBtn")]
+[node name="CharacterCardEdit" type="Node" parent="." node_paths=PackedStringArray("playerName", "penmanshipEdit", "languageEdit", "heartEdit", "pathEdit", "ExitBtn", "saveBtn")]
 script = ExtResource("2_rd0fl")
-strTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer/StrEdit")
-conTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer/ConEdit")
-sizTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer/SizEdit")
-dexTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer/DexEdit")
-appTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer/AppEdit")
-wisdomTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2/WinformEdit")
-powTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2/PowEdit")
-eduTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2/EduEdit")
-luckyTxt = NodePath("../SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2/LuckyEdit")
-ageTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer/AgeEdit")
-sanTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer/SanTxt")
-mpTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer/MpTxt")
-exDmTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer/ExDamageNumLabel")
-speedTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer/SpeedNumberLabel")
-PhysiqueTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/PhysiqueTxt")
-nameTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/NameEdit")
-homeTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/HomeEdit")
-homeTownTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/HomeTownEdit")
-eraTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/EraEdit")
-sexTxt = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/SexEdit")
-saveBtn = NodePath("../SwipePanel/HBoxContainer/Data/SaveBtn")
-loadDataBtn = NodePath("../SwipePanel/HBoxContainer/Data/LoadBtn")
-rollBtn = NodePath("../SwipePanel/HBoxContainer/Data/RollBtn")
+playerName = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/NameEdit")
+penmanshipEdit = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/PenmanshipEdit")
+languageEdit = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/LanguageEdit")
+heartEdit = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/HeartEdit")
+pathEdit = NodePath("../SwipePanel/HBoxContainer/Personal/VBoxContainer2/PathEdit")
+ExitBtn = NodePath("../Button")
+saveBtn = NodePath("../SwipePanel/VBoxContainer2/SaveBtn")
 
 [node name="LineText" type="Node" parent="CharacterCardEdit"]
 
 [node name="Attribute" type="Node" parent="."]
 
-[node name="SwipePanel" type="Control" parent="." node_paths=PackedStringArray("_pagesContainer", "OsTxt")]
+[node name="SwipePanel" type="Control" parent="."]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("3_3iquq")
-_pagesContainer = NodePath("HBoxContainer")
-OsTxt = NodePath("OS")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SwipePanel"]
 layout_mode = 0
-offset_left = 7.0
-offset_right = 1188.0
-offset_bottom = 504.0
-scale = Vector2(1.5168, 1.58775)
+offset_left = -1.0
+offset_right = 359.0
+offset_bottom = 800.0
 
 [node name="Personal" type="HBoxContainer" parent="SwipePanel/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 95
+theme_override_constants/separation = 202
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="SwipePanel/HBoxContainer/Personal"]
 layout_mode = 2
@@ -75,203 +63,115 @@ text = "姓名"
 [node name="NameEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = ExtResource("2_udmib")
 max_length = 4
+clear_button_enabled = true
 
-[node name="SexLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="PenmanshipLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
-text = "性别"
+text = "书法"
 
-[node name="SexEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="PenmanshipEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
+theme_override_styles/normal = ExtResource("2_udmib")
+theme_override_icons/arrow = ExtResource("2_3iquq")
 item_count = 3
-popup/item_0/text = "男"
+popup/item_0/text = "可怜"
 popup/item_0/id = 0
-popup/item_1/text = "女"
+popup/item_1/text = "普通"
 popup/item_1/id = 1
-popup/item_2/text = "不明"
+popup/item_2/text = "优秀"
 popup/item_2/id = 2
 
-[node name="EraLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="LanguageLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
-text = "时代"
+text = "语言"
 
-[node name="EraEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="LanguageEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
-item_count = 1
-popup/item_0/text = "1920"
+theme_override_styles/normal = ExtResource("2_udmib")
+theme_override_icons/arrow = ExtResource("2_3iquq")
+item_count = 3
+popup/item_0/text = "可怜"
 popup/item_0/id = 0
+popup/item_1/text = "普通"
+popup/item_1/id = 1
+popup/item_2/text = "优秀"
+popup/item_2/id = 2
 
-[node name="HomeLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="HeartLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
-text = "住址"
+text = "心灵"
 
-[node name="HomeEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="HeartEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
-max_length = 6
+theme_override_styles/normal = ExtResource("2_udmib")
+theme_override_icons/arrow = ExtResource("2_3iquq")
+item_count = 3
+popup/item_0/text = "可怜"
+popup/item_0/id = 0
+popup/item_1/text = "普通"
+popup/item_1/id = 1
+popup/item_2/text = "优秀"
+popup/item_2/id = 2
 
-[node name="HomeTownLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="PathLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
-text = "家乡"
+text = "存档地址"
 
-[node name="HomeTownEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
+[node name="PathEdit" type="OptionButton" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 10
-max_length = 6
-
-[node name="PhysiqueLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
-layout_mode = 2
-text = "体格"
-
-[node name="PhysiqueTxt" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer2"]
-layout_mode = 2
-text = "0"
+theme_override_styles/normal = ExtResource("2_udmib")
+theme_override_icons/arrow = ExtResource("2_3iquq")
+item_count = 3
+popup/item_0/text = "存档1"
+popup/item_0/id = 0
+popup/item_1/text = "存档2"
+popup/item_1/id = 1
+popup/item_2/text = "存档3"
+popup/item_2/id = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SwipePanel/HBoxContainer/Personal"]
 layout_mode = 2
 theme_override_constants/separation = 5
 
 [node name="Photo" type="TextureRect" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
+material = ExtResource("3_gtxmc")
 custom_minimum_size = Vector2(-1, -1)
 layout_mode = 2
 texture = ExtResource("4_rd0fl")
 expand_mode = 5
 stretch_mode = 4
 
-[node name="AgeLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
+[node name="ImageId" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
 layout_mode = 2
-text = "年龄AGE"
-
-[node name="AgeEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-
-[node name="SanLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "理智值"
-
-[node name="SanTxt" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="MpLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "魔法值"
-
-[node name="MpTxt" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="ExDamageLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "伤害加值"
-
-[node name="ExDamageNumLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="SpeedLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "速度"
-
-[node name="SpeedNumberLabel" type="Label" parent="SwipePanel/HBoxContainer/Personal/VBoxContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="Data" type="VBoxContainer" parent="SwipePanel/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SwipePanel/HBoxContainer/Data"]
-layout_mode = 2
-theme_override_constants/separation = 92
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SwipePanel/HBoxContainer/Data/HBoxContainer"]
-layout_mode = 2
-
-[node name="StrLabel" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "力量STR"
-
-[node name="StrEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ConLabel" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "体质CON"
-
-[node name="ConEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="SizLabel" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "体型SIZ"
-
-[node name="SizEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="DexLabel" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "敏捷DEX"
-
-[node name="DexEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="AppLabel" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "外貌APP"
-
-[node name="AppEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="SwipePanel/HBoxContainer/Data/HBoxContainer"]
-layout_mode = 2
-
-[node name="WinformLabe" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "智力INT"
-
-[node name="WinformEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="PowLabel" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "意志POW"
-
-[node name="PowEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="EduLabe" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "教育EDU"
-
-[node name="EduEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="LuckyLabel" type="Label" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "辛运LUCK"
-
-[node name="LuckyEdit" type="LineEdit" parent="SwipePanel/HBoxContainer/Data/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="RollBtn" type="Button" parent="SwipePanel/HBoxContainer/Data"]
-layout_mode = 2
-text = "Roll"
-
-[node name="SaveBtn" type="Button" parent="SwipePanel/HBoxContainer/Data"]
-layout_mode = 2
-text = "保存"
-
-[node name="LoadBtn" type="Button" parent="SwipePanel/HBoxContainer/Data"]
-layout_mode = 2
-text = "读取"
+theme_override_font_sizes/font_size = 27
+text = "头像Id"
+horizontal_alignment = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="SwipePanel"]
-visible = false
 layout_mode = 2
-offset_left = 179.915
-offset_right = 179.915
-offset_bottom = 504.0
+offset_left = -1.0
+offset_top = 659.0
+offset_right = 358.0
+offset_bottom = 797.0
+
+[node name="SaveBtn" type="TextureButton" parent="SwipePanel/VBoxContainer2"]
+material = SubResource("ShaderMaterial_0k2q4")
+layout_mode = 2
+texture_normal = ExtResource("6_udmib")
+texture_pressed = ExtResource("8_0k2q4")
+texture_hover = ExtResource("9_y7xxm")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="SwipePanel/VBoxContainer2/SaveBtn"]
+layout_mode = 0
+offset_right = 359.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 47
+text = "保存"
+horizontal_alignment = 1
 
 [node name="OS" type="Label" parent="SwipePanel"]
 layout_mode = 0
@@ -279,90 +179,10 @@ offset_top = 774.0
 offset_right = 40.0
 offset_bottom = 797.0
 
-[node name="VBoxContainer5" type="VBoxContainer" parent="SwipePanel"]
-visible = false
-layout_mode = 2
-offset_left = 179.915
-offset_right = 412.915
-offset_bottom = 306.0
-theme_override_constants/separation = 20
-
-[node name="HBoxContainer" type="HBoxContainer" parent="SwipePanel/VBoxContainer5"]
-layout_mode = 2
-theme_override_constants/separation = 92
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SwipePanel/VBoxContainer5/HBoxContainer"]
-layout_mode = 2
-
-[node name="StrLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "力量STR"
-
-[node name="StrEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ConLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "体质CON"
-
-[node name="ConEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="SizLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "体型SIZ"
-
-[node name="SizEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="DexLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "敏捷DEX"
-
-[node name="DexEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="AppLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-text = "外貌APP"
-
-[node name="AppEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="SwipePanel/VBoxContainer5/HBoxContainer"]
-layout_mode = 2
-
-[node name="WinformLabe" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "智力INT"
-
-[node name="WinformEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="PowLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "意志POW"
-
-[node name="PowEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="EduLabe" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "教育EDU"
-
-[node name="EduEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="LuckyLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "辛运LUCK"
-
-[node name="LuckyEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-
-[node name="AgeLabel" type="Label" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "年龄AGE"
-
-[node name="AgeEdit" type="LineEdit" parent="SwipePanel/VBoxContainer5/HBoxContainer/VBoxContainer2"]
-layout_mode = 2
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 151.0
+offset_right = 360.0
+offset_bottom = 242.0
+text = "离开当前场景"

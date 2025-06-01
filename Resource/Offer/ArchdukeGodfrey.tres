@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="GrillOfferData" load_steps=2 format=3 uid="uid://chhwod7mdlh1w"]
+
+[ext_resource type="Script" uid="uid://b40qgwycaorop" path="res://Script/Data/GrillOfferData.cs" id="1_35wg7"]
+
+[resource]
+script = ExtResource("1_35wg7")
+InkPot = Dictionary[String, String]({
+"城镇": "里弗顿",
+"天使": "六翼天使赛拉弗",
+"教堂": "光明大教堂",
+"教师": "学者",
+"死亡": "去世",
+"爬树": "攀爬橡树",
+"罗德马": "罗德雄马",
+"鸭子": "绿头鸭"
+})
+Name = "戈弗雷大公"
+Description = "❖ 你与戈弗雷大公通信，他是王室
+中一位非常有权势的成员，以
+其严肃的举止而闻名。
+❖ 你写信是为了对他妹妹林彻斯特
+玛丽的去世表示哀悼。一周
+前，她患上了抑郁症并去世
+了。你们小时候在同一所学校
+上学，那时就认识她了。你会
+提起你的过去，以及你们小时
+候的所作所为。"
+Rules = "❖ 在这个场景下，朝臣和贵族获
+得1个额外的心灵骰子。
+❖ 你在这封信中用的是上等羊皮
+纸。获得1个额外的书法骰子。"
+ConsequencesL = "大公对你的信很反感。你失去了他的尊重，将不再与你联系。"
+ConsequencesM = "大公很友好地回应，但很快
+就批评了你的信。几个月内你不太可
+能收到他的消息。"
+ConsequencesH = "大公感谢您的来信。他邀请
+你下周来他家作客。"
+ConsequencesB = "大公非常感谢您的来
+信，并承诺将以一份价值非凡的礼物
+报答您的好意。"
+metadata/_custom_type_script = "uid://b40qgwycaorop"
