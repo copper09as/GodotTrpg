@@ -38,16 +38,16 @@ public partial class NetManager : Node
     {
         if (RoomManager.Instance.rooms.ContainsKey(roomId))
         {
-            if (RoomManager.Instance.rooms[roomId].players.Count >= 2)
+
+            if (RoomManager.Instance.rooms[roomId].players.Count >= 4 || RoomManager.Instance.rooms[roomId].start)
             {
                 GD.Print(roomId.ToString() + "房间已满");
                 return;
             }
         }
         var room = RoomManager.Instance.EnterRoom(roomId, peerId);
-        RpcId(room.hostId, MethodName.BecomeHost, 1);
+        RpcId(peerId, MethodName.SetPlayer, 1,room.hostId == peerId);//分配房主权限
         RpcId(peerId, MethodName.SyncEnterRoom, peerId, roomId);//自己加入自己的房间
-        RpcId(peerId, MethodName.SyncLoadPlayer, peerId);//自己加载自己
         foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
         {
             if (existingId != (int)peerId)
@@ -58,13 +58,13 @@ public partial class NetManager : Node
                 RpcId(existingId, MethodName.SyncLoadPlayer, peerId);//别人加载自己
             }
         }
-        if (RoomManager.Instance.rooms[roomId].players.Count >= 2)
+        /*if (RoomManager.Instance.rooms[roomId].players.Count >= 2)
         {
             foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
             {
                 RpcId(existingId, MethodName.RoomFill);
             }
-        }
+        }*/
         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
     }
 
@@ -80,24 +80,32 @@ public partial class NetManager : Node
         if (peerId == Multiplayer.GetUniqueId())
         {
             GameManager.Instance.roomId = roomId;
+            RoomManager.Instance.PlayerEnterRoom();
         }
         RoomManager.Instance.players.Add(peerId);
         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
     }
+    
     [Rpc(MultiplayerApi.RpcMode.Authority)]
     private void SyncLoadPlayer(int peerId)
     {
-        var player = ResManager.Instance.CreateInstance<Player>(StringResource.PlayerPath, this, "Player" + peerId.ToString());
+        //var player = ResManager.Instance.CreateInstance<Player>(StringResource.PlayerPath, this, "Player" + peerId.ToString());
         if (peerId != Multiplayer.GetUniqueId())
         {
             var playerGameManager = ResManager.Instance.CreateInstance<GameManager>(StringResource.GameManagerPath, this, peerId.ToString());
-            playerGameManager.player = player;
+            playerGameManager.player = null;
         }
-        player.GetParent().RemoveChild(player);
         var node = this.GetNodeOrNull(peerId.ToString());
-        node.AddChild(player);
 
     }
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
+    private void ExitRoom(int id,int peerId)
+    {
+        RoomManager.Instance.servePlayers.Remove((int)id);
+        ServeNetServe.GetInstance().LeaveRoom(peerId,false);
+         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
+    }
+
     /// <summary>
     /// 玩家房间移除目标的玩家，并且删除目标玩家
     /// </summary>
@@ -107,8 +115,11 @@ public partial class NetManager : Node
     {
         RoomManager.Instance.players.Remove(peerId);
         var node = this.GetNodeOrNull(peerId.ToString());
-        node.QueueFree();
         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
+        if (node != null)
+            node.QueueFree();
+        else
+            GD.Print("转接器已删除");
         GD.Print($"玩家 {peerId} 已从房间 {GameManager.Instance.roomId} 退出");
     }
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -117,7 +128,7 @@ public partial class NetManager : Node
         var playerGameManager = ResManager.Instance.CreateInstance<GameManager>(StringResource.GameManagerPath, NetManager.Instance, id.ToString());
         RoomManager.Instance.servePlayers.Add((int)id);
         RpcId(id, MethodName.SyncGameManager, id);
-        GD.Print(id);
+        GD.Print("转接器已生成");
         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
     }
     [Rpc(MultiplayerApi.RpcMode.Authority)]
@@ -127,36 +138,48 @@ public partial class NetManager : Node
         var playerGameManager = ResManager.Instance.CreateInstance<GameManager>(StringResource.GameManagerPath, this, id.ToString());
         ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
     }
-    public void SetHost(int id)
+    /*
+    public void SetPlayer(int id, bool isHost)
     {
-        RpcId(id, MethodName.BecomeHost, id);
-    }
+        RpcId(id, MethodName.BecomeHost, id, isHost);
+    }*/
     [Rpc(MultiplayerApi.RpcMode.Authority)]
-    public void BecomeHost(int id)
+    public void SetPlayer(int id, bool isHost)
     {
-        GameManager.Instance.IsHost = true;
+        GameManager.Instance.IsHost = isHost;
+        GameManager.Instance.EnterRoom();
     }
-    [Rpc(MultiplayerApi.RpcMode.Authority)]
+    /*[Rpc(MultiplayerApi.RpcMode.Authority)]
     public void RoomFill()
     {
         GameManager.Instance.RoomFill();
-    }
-    public void StartGameLocal(int roomId,int offer)
+    }*/
+    public void StartGameLocal(int roomId, int offer)
     {
-        NetManager.Instance.RpcId(1, MethodName.StartGame, GameManager.Instance.roomId,offer);
+        Instance.RpcId(1, MethodName.StartGame, GameManager.Instance.roomId, offer);
     }
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void StartGame(int roomId,int offer)
+    public void StartGame(int roomId, int offer)
     {
-        foreach (var existingId in RoomManager.Instance.rooms[roomId].players)
+        var room = RoomManager.Instance.rooms[roomId];
+        if (room.players.Count <= 1)
         {
-            RpcId(existingId, MethodName.SyncStartGame,offer);
+            return;
         }
+        room.start = true;
+        foreach (var existingId in room.players)
+        {
+            RpcId(existingId, MethodName.SyncStartGame, offer);
+        }
+        
     }
     [Rpc(MultiplayerApi.RpcMode.Authority)]
     public void SyncStartGame(int offer)
     {
-        GameManager.Instance.StartGame(offer);
+        
+        ServeEventCenter.TriggerEvent(StringResource.StartGame, offer);
+        ServeEventCenter.TriggerEvent(StringResource.StartGame);
+        //GameManager.Instance.StartGame(offer);
     }
 
 

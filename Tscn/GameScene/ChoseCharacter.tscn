@@ -14,8 +14,9 @@ characterOption = NodePath("CharacterChose")
 
 [node name="CharacterChose" type="OptionButton" parent="."]
 layout_mode = 0
-offset_top = 344.0
-offset_right = 66.0
-offset_bottom = 376.0
+offset_left = -5.0
+offset_top = 629.0
+offset_right = 61.0
+offset_bottom = 661.0
 theme_override_styles/normal = ExtResource("2_j65uq")
 theme_override_icons/arrow = ExtResource("3_ljind")

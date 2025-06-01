@@ -13,6 +13,7 @@ public partial class RoomManager : Node
     [Export] public ItemList playerList;
     [Export] public LineEdit roomId;
     [Export] public Button EnterRoomBtn;
+    [Export] private Button ExitRoomBtn;
     public override void _Ready()
     {
         base._Ready();
@@ -22,7 +23,27 @@ public partial class RoomManager : Node
         {
             EnterRoomBtn.Pressed += OnEnterRoom;
         }
+        if (!Multiplayer.IsServer())
+        {
+            ServeEventCenter.RegisterEvent(StringResource.StartGame, StartGame);
+            ExitRoomBtn.Pressed += ExitRoomPress;
+        }
         ServeEventCenter.RegisterEvent(StringResource.UpdateUi, UpdatePlayerList);
+    }
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        ServeEventCenter.UnregisterEvent(StringResource.UpdateUi, UpdatePlayerList);
+        if (!Multiplayer.IsServer())
+        {
+            ServeEventCenter.UnregisterEvent(StringResource.UpdateUi, StartGame);
+        }
+
+    }
+    private void ExitRoomPress()
+    {
+        NetManager.Instance.RpcId(1, "ExitRoom", GameManager.Instance.roomId, Multiplayer.GetUniqueId());
+        SceneChangeManager.Instance.ChangeScene(StringResource.MainGame);
     }
     public override void _Process(double delta)
     {
@@ -35,9 +56,19 @@ public partial class RoomManager : Node
             int roomid = int.Parse(roomId.Text);
             int peerId = Multiplayer.GetUniqueId();
             NetManager.Instance.RpcId(1, "EnterRoom", roomid, peerId);
-            EnterRoomBtn.Hide();
-            roomId.Hide();
         }
+    }
+    public void PlayerEnterRoom()
+    {
+        EnterRoomBtn.Hide();
+        roomId.Hide();
+    }
+    private void StartGame()
+    {
+        if (IsInstanceValid( playerList))
+            playerList.Hide();
+        if (IsInstanceValid( ExitRoomBtn))
+            ExitRoomBtn.Hide();
     }
     private void UpdatePlayerList()
     {
@@ -48,17 +79,17 @@ public partial class RoomManager : Node
             roomList.Clear();
             foreach (var room in rooms.Values)
             {
-                roomList.AddItem("房间号"+room.id.ToString());
+                roomList.AddItem("房间号" + room.id.ToString());
             }
         }
         // 更新玩家数量
-            //count.Text = onlinePlayers.Count.ToString();
+        //count.Text = onlinePlayers.Count.ToString();
 
-            // 添加所有在线玩家的 ID
-            foreach (var playerId in onlinePlayers)
-            {
-                playerList.AddItem(playerId.ToString());
-            }
+        // 添加所有在线玩家的 ID
+        foreach (var playerId in onlinePlayers)
+        {
+            playerList.AddItem(playerId.ToString());
+        }
     }
     /// <summary>
     /// 请求者加入指定房间,仅服务端处理
@@ -134,5 +165,6 @@ public partial class RoomManager : Node
         public int hostId;
         public string name;
         public List<int> players;
+        public bool start;
     }
 }

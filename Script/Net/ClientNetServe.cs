@@ -3,8 +3,7 @@ using Godot;
 
 public class ClientNetServe : NetServe
 {
-    private string ip;
-    private int port;
+
     private static ClientNetServe instance;
     private ClientNetServe(MultiplayerApi Multiplayer) : base(Multiplayer) { }
     public static ClientNetServe GetInstance(MultiplayerApi Multiplayer, string ip, int port)
@@ -25,16 +24,6 @@ public class ClientNetServe : NetServe
         }
         return instance;
 
-    }
-    public void CreateClient()
-    {
-        var peer = new ENetMultiplayerPeer();
-        if (peer.CreateClient(ip, port) == Error.Ok)
-        {
-            GD.Print("正在尝试连接到服务器...");
-            Multiplayer.MultiplayerPeer = peer;
-            GD.Print("正在初始化");
-        }
     }
     public override void EnterRoom()
     {

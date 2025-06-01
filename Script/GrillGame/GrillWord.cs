@@ -34,10 +34,19 @@ public partial class GrillWord : Control
         background.Material = lightningMaterial;
         UpdateWord();
     }
-    public void UpdateWord()
+    private void UpdateWord()
     {
+        if (!IsInstanceValid(wordTxt))
+        {
+            wordTxt = (Label)GetChild(1);
+        }
         wordTxt.Text = GetWord();
-        lightningMaterial.SetShaderParameter("active", lvId == 1);
+
+        if (IsInstanceValid(lightningMaterial))
+        {
+            lightningMaterial.SetShaderParameter("active", lvId == 1);
+        }
+
     }
     private void OnInputEvent(InputEvent @event)
     {
@@ -69,7 +78,7 @@ public partial class GrillWord : Control
         background.Texture = defaultBack;
         GD.Print(wordTxt.Text + "退出");
     }
-    public string GetWord()=>lvId == 0 ? word.lWord : word.hWord;
+    public string GetWord() => lvId == 0 ? word.lWord : word.hWord;
 }
 public struct Word
 {

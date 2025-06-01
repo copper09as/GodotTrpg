@@ -53,11 +53,18 @@ public partial class GrillGameManager : Control
         {
             
         }
-        grillPlayer = GameDataCenter.Instance.currentPlayerData;
+        else
+            grillPlayer = GameDataCenter.Instance.currentPlayerData;
         InitData();
         CreataWord();
 
     }
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        Instance = null;
+    }
+
     private void InitData()
     {
         dice = CaculateTool.CaculateDice(1, 6);

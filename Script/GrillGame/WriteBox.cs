@@ -22,12 +22,22 @@ public partial class WriteBox : Control
         base._Ready();
         FinishBtn.Pressed += OnFinishBtnPress;
         HeartBtn.Pressed += OnHeartBtnPress;
-        writeWords[2].Hide();
-        writeWords[3].Hide();
+        letter = Enumerable.Repeat("", 5).ToArray();
+        count = 0;
+        for (int i = 2; i < writeWords.Count; i++)
+        {
+            writeWords[i].Hide();
+        }
     }
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+
+    }
+
     private void OnFinishBtnPress()
     {
-        if (CanPress()) return;
+        if (IsButtonBlocked()) return;
         foreach (var i in writeWords)
         {
             i.IsFillInk = true;
@@ -51,19 +61,21 @@ public partial class WriteBox : Control
     }
     private void OnHeartBtnPress()
     {
-        if (CanPress()) return;
+        if (IsButtonBlocked()) return;
         if (!canRollHeart) return;
         GD.Print("开启华丽辞藻鉴定");
         if (GrillGameManager.Instance.RollHeart())
         {
             GrillGameManager.Instance.Score += lvId == 1 ? 1 : -1;
         }
-        writeWords[2].Show();
-        writeWords[3].Show();
+        for (int i = 2; i < writeWords.Count; i++)
+        {
+            writeWords[i].Show();
+        }
         canRollHeart = false;
         HeartBtn.Hide();
 
     }
-    private bool CanPress() => !isFinish || isOver;
+    private bool IsButtonBlocked() => !isFinish || isOver;
 
 }

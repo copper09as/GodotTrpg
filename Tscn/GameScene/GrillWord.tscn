@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bf1euvgl4qo15"]
 
 [ext_resource type="Texture2D" uid="uid://v6aq72cw45yx" path="res://Art/kenney_ui-pack/PNG/Blue/Double/button_square_depth_border.png" id="1_jyh5i"]
-[ext_resource type="Script" uid="uid://biarqq4o8biph" path="res://Script/GrillWord/GrillWord.cs" id="1_x22ot"]
+[ext_resource type="Script" uid="uid://biarqq4o8biph" path="res://Script/GrillGame/GrillWord.cs" id="1_x22ot"]
 [ext_resource type="Texture2D" uid="uid://b86evxxlhkc3s" path="res://Art/kenney_ui-pack/PNG/Red/Default/button_square_depth_line.png" id="3_nwkj6"]
 [ext_resource type="Shader" uid="uid://dum1lkyhn52xn" path="res://Shader/WordShader.gdshader" id="4_nwkj6"]
 

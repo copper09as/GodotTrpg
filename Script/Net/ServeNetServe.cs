@@ -24,7 +24,11 @@ public class ServeNetServe : NetServe
         }
         return instance;
     }
-    private ServeNetServe(MultiplayerApi Multiplayer, int port, int max) : base(Multiplayer){}
+    public static ServeNetServe GetInstance()
+    {
+        return instance;
+    }
+    private ServeNetServe(MultiplayerApi Multiplayer, int port, int max) : base(Multiplayer) { }
     public override void EnterRoom()
     {
         throw new System.NotImplementedException();
@@ -45,7 +49,7 @@ public class ServeNetServe : NetServe
             ServeEventCenter.TriggerEvent(StringResource.UpdateUi);
         }
     }
-    private void LeaveRoom(long id)
+    public void LeaveRoom(long id,bool isQueue = true)
     {
         int roomId = RoomManager.Instance.LeaveRoom((int)id);
         if (RoomManager.Instance.rooms.ContainsKey(roomId))//如果服务端房间存在
@@ -56,6 +60,7 @@ public class ServeNetServe : NetServe
             }
         }
         var node = NetManager.Instance.GetNodeOrNull(id.ToString());
-        node.QueueFree();
+        if(isQueue)
+            node.QueueFree();
     }
 }

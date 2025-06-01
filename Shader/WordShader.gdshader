@@ -11,37 +11,37 @@ uniform sampler2D noise_tex : source_color;
 
 void fragment() {
     vec4 base_color = texture(TEXTURE, UV);
-    
+
     if (active) {
         // 计算UV偏移 (随时间移动)
         vec2 uv_offset = vec2(TIME * speed * 0.2, TIME * speed * 0.3);
-        
+
         // 获取噪声值
         float noise1 = texture(noise_tex, UV * 1.5 + uv_offset).r;
         float noise2 = texture(noise_tex, UV * 2.0 - uv_offset).g;
-        
+
         // 计算边缘距离 (0=边缘, 1=中心)
         float edge_dist = min(
             min(UV.x, 1.0 - UV.x),
             min(UV.y, 1.0 - UV.y)
         );
-        
+
         // 创建雷电效果
-        float lightning = smoothstep(0.4, 0.6, noise1) * 
+        float lightning = smoothstep(0.4, 0.6, noise1) *
                          smoothstep(0.3, 0.5, noise2) *
                          (1.0 - smoothstep(0.0, 0.1, edge_dist));
-        
+
         // 增加脉动效果
         float pulse = 0.5 + 0.5 * sin(TIME * speed * 3.0);
         lightning *= pulse * intensity;
-        
+
         // 创建发光效果
         vec3 glow = vec3(lightning) * lightning_color.rgb * 2.0;
-        
+
         // 混合效果
         vec3 final_color = mix(base_color.rgb, lightning_color.rgb, lightning * 0.5);
         final_color += glow;
-        
+
         // 保持原始透明度
         COLOR = vec4(final_color, base_color.a);
     } else {

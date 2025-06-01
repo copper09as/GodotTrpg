@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://pxjmthrwrffc"]
+[gd_scene load_steps=5 format=3 uid="uid://pxjmthrwrffc"]
 
 [ext_resource type="Script" uid="uid://b8lsayhut3flt" path="res://Script/Manager/RoomManager.cs" id="2_2jr3o"]
+[ext_resource type="FontFile" uid="uid://b33056pywdxi6" path="res://Art/kenney_ui-pack/Font/Kenney Future Narrow.ttf" id="2_xkx02"]
 [ext_resource type="Script" uid="uid://dwyqj1gdl2jf5" path="res://Script/Manager/ChatManager.cs" id="3_xkx02"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2jr3o"]
@@ -23,19 +24,23 @@ theme_override_font_sizes/font_size = 8
 
 [node name="ChatList" type="ItemList" parent="." node_paths=PackedStringArray("messageTxt", "SendBtn", "nameTxt")]
 visible = false
+z_index = 10
 offset_top = 414.0
 offset_right = 356.0
-offset_bottom = 608.0
+offset_bottom = 620.0
 script = ExtResource("3_xkx02")
 messageTxt = NodePath("Message")
 SendBtn = NodePath("SengBtn")
 nameTxt = NodePath("name")
 
 [node name="Message" type="TextEdit" parent="ChatList"]
+z_index = 10
 layout_mode = 0
-offset_top = 242.0
-offset_right = 360.0
-offset_bottom = 322.0
+offset_left = 4.0
+offset_top = 202.0
+offset_right = 364.0
+offset_bottom = 282.0
+theme_override_fonts/font = ExtResource("2_xkx02")
 placeholder_text = "发送消息"
 
 [node name="name" type="LineEdit" parent="ChatList"]
@@ -52,13 +57,19 @@ offset_right = 360.0
 offset_bottom = 403.0
 text = "发送信息"
 
+[node name="Panel" type="Panel" parent="ChatList"]
+layout_mode = 0
+offset_right = 360.0
+offset_bottom = 274.0
+
 [node name="Room" type="Node" parent="."]
 
-[node name="RoomManager" type="Node" parent="Room" node_paths=PackedStringArray("playerList", "roomId", "EnterRoomBtn")]
+[node name="RoomManager" type="Node" parent="Room" node_paths=PackedStringArray("playerList", "roomId", "EnterRoomBtn", "ExitRoomBtn")]
 script = ExtResource("2_2jr3o")
 playerList = NodePath("../../ItemList")
 roomId = NodePath("../LineEdit")
 EnterRoomBtn = NodePath("../Button")
+ExitRoomBtn = NodePath("../ExitBtn")
 
 [node name="LineEdit" type="LineEdit" parent="Room"]
 offset_top = 137.0
@@ -71,3 +82,10 @@ offset_top = 232.0
 offset_right = 360.0
 offset_bottom = 304.0
 text = "进入房间"
+
+[node name="ExitBtn" type="Button" parent="Room"]
+offset_top = 304.0
+offset_right = 356.0
+offset_bottom = 416.0
+text = "退出房间
+"

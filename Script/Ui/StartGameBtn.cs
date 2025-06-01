@@ -10,13 +10,18 @@ public partial class StartGameBtn : TextureButton
         base._Ready();
         Pressed += OnStartGame;
         UpdateOffer();
+        
     }
     private void OnStartGame()
     {
         if (offerOption.Selected == -1)
+        {
+            GD.Print("未选定");
             return;
-        NetManager.Instance.StartGameLocal(GameManager.Instance.roomId,offerOption.Selected);
-        this.QueueFree();
+        }
+        ServeEventCenter.RegisterOneTimeEvent(StringResource.StartGame,StartGame);
+        NetManager.Instance.StartGameLocal(GameManager.Instance.roomId, offerOption.Selected);
+        
     }
     private void UpdateOffer()
     {
@@ -24,5 +29,9 @@ public partial class StartGameBtn : TextureButton
         {
             offerOption.AddItem(i.Name);
         }
+    }
+    private void StartGame(int offer)
+    {
+        this.Hide();
     }
 }

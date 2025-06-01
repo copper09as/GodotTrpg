@@ -9,7 +9,6 @@ public partial class CharacterCardEdit : Node
     [Export] private OptionButton heartEdit;
     [Export] private OptionButton pathEdit;
     [Export] private Button ExitBtn;
-
     [Export] private TextureButton saveBtn;
     public override void _Ready()
     {
@@ -29,17 +28,11 @@ public partial class CharacterCardEdit : Node
         if (!CanCreatePlayer())
             return;
         var player = GetGrillPlayerData();
-        switch (pathEdit.Selected)
-        {
-            case 0: GameDataHandler.Save<GrillPlayerData>(player, StringResource.PlayerDataFilePath0); break;
-            case 1: GameDataHandler.Save<GrillPlayerData>(player, StringResource.PlayerDataFilePath1); break;
-            case 2: GameDataHandler.Save<GrillPlayerData>(player, StringResource.PlayerDataFilePath2); break;
-        }
+        GameDataHandler.Save<GrillPlayerData>(player, StringResource.GetPlayerSavePath(pathEdit.Selected));
         GameDataCenter.Instance.UpdatePlayerList();
     }
     private GrillPlayerData GetGrillPlayerData()
     {
-
         GrillPlayerData player = new GrillPlayerData
         {
             Name = playerName.Text,

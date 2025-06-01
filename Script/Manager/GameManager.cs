@@ -12,11 +12,24 @@ public partial class GameManager : Node
     public override void _Ready()
     {
         base._Ready();
-        if (Instance == null)
+        if (Instance == null && !Multiplayer.IsServer())
         {
             Instance = this;
+            ServeEventCenter.RegisterEvent(StringResource.StartGame, StartGame);
         }
+
     }
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        if (Instance == this)
+        {
+            Instance = null;
+            ServeEventCenter.UnregisterEvent(StringResource.StartGame, StartGame);
+        }
+        
+    }
+
     public override void _Process(double delta)
     {
         if (Multiplayer.IsServer())
@@ -28,7 +41,6 @@ public partial class GameManager : Node
         base._Process(delta);
         //if (IsHost) GD.Print("我是房主");
         var pos = player.MoveInput();
-        RpcId(1, MethodName.ServerMoveRequest, pos, Multiplayer.GetUniqueId(), GameManager.Instance.roomId);
     }
 
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
@@ -45,20 +57,8 @@ public partial class GameManager : Node
         ChatManager.Instance.UpdateMessage(message);
     }
 
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    private void ServerMoveRequest(Vector2 position, long senderPeerId, int roomId)
-    {
-        foreach (var id in RoomManager.Instance.rooms[roomId].players)
-        {
-            RpcId(id, MethodName.ClientUpdatePos, senderPeerId, position);
-        }
-    }
-    [Rpc(MultiplayerApi.RpcMode.Authority)]
-    private void ClientUpdatePos(long playerId, Vector2 position)
-    {
-        player.UpdatePos(position);
-    }
-    public void SendLetter(string message)
+
+    public void SendLetter(string message)//本地发送信件
     {
         GD.Print("发送信件");
         GD.Print(message);
@@ -66,16 +66,16 @@ public partial class GameManager : Node
 
     }
     [Rpc(MultiplayerApi.RpcMode.AnyPeer)]
-    public void FinishLetter(int roomId, int peerId, string message)
+    public void FinishLetter(int roomId, int peerId, string message)//服务端接受并且转发
     {
         RpcId(RoomManager.Instance.rooms[roomId].hostId, MethodName.SyncUpdateLetter, peerId, message);
     }
     [Rpc(MultiplayerApi.RpcMode.Authority)]
-    private void SyncUpdateLetter(int peerId, string message)
+    private void SyncUpdateLetter(int peerId, string message)//收信人接受信件
     {
         GrillHost.Instance.ReceiveMessage(peerId, message);
     }
-    public void RoomFill()
+    public void EnterRoom()
     {
         if (!IsHost)
             ResManager.Instance.CreateInstance<ChoseCharacter>(StringResource.ChoseCharacterTsce, GetNode("/root/MainGame2"), "Chose");

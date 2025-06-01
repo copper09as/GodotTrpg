@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3iaai5npnoyh" path="res://Script/Ui/OfferUiManager.cs" id="1_3a5b8"]
 [ext_resource type="Script" uid="uid://362vts3q0vq2" path="res://Script/Manager/GrillGameManager.cs" id="1_ly14v"]
-[ext_resource type="Script" uid="uid://ddjci6pewu8ii" path="res://Script/Manager/SwipePanel.cs" id="4_tvonr"]
+[ext_resource type="Script" uid="uid://ddjci6pewu8ii" path="res://Script/Ui/SwipePanel.cs" id="4_tvonr"]
 [ext_resource type="FontFile" uid="uid://dnr1l5ggktoi7" path="res://Art/kenney_ui-pack/Font/Kenney Future.ttf" id="5_ekiqd"]
 [ext_resource type="Script" uid="uid://cyu02d7at6o3n" path="res://Script/Ui/PlayerUiManager.cs" id="6_gqqrj"]
 [ext_resource type="Script" uid="uid://cqjxtp1oyymdr" path="res://Script/Ui/ScoreUi.cs" id="7_kuwwm"]
@@ -167,10 +167,11 @@ layout_mode = 2
 [node name="HeartTxt" type="Label" parent="PlayerUiManager/Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="ScoreUi" type="Node" parent="." node_paths=PackedStringArray("descriptionTxt", "containNode")]
+[node name="ScoreUi" type="Node" parent="." node_paths=PackedStringArray("descriptionTxt", "containNode", "RestartBtn")]
 script = ExtResource("7_kuwwm")
 descriptionTxt = NodePath("ScoreUi/Label")
 containNode = NodePath("ScoreUi")
+RestartBtn = NodePath("ScoreUi/Restart")
 
 [node name="ScoreUi" type="Control" parent="ScoreUi"]
 z_index = 4
@@ -197,3 +198,11 @@ offset_top = -12.0
 offset_right = 284.0
 offset_bottom = 472.0
 theme_override_styles/panel = ExtResource("7_wo5lg")
+
+[node name="Restart" type="Button" parent="ScoreUi/ScoreUi"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 442.0
+offset_right = 283.0
+offset_bottom = 473.0
+text = "再来一把"
